@@ -3,15 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Push Campaign Mapping - Braze to MoEngage</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Push Campaign Mapping - MoEngage Official Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --color-bg-primary:#F9FAFB; --color-bg-secondary:#FFFFFF; --color-bg-nav-dark:#1D244F; --color-bg-interactive:#00AFB9; --color-bg-interactive-hover:#009DA6;
+        --color-text-primary:#111827; --color-text-secondary:#6B7280; --color-text-interactive:#00AFB9; --color-text-on-dark:#FFFFFF; --color-text-on-interactive:#FFFFFF;
+        --color-border-default:#E5E7EB; --color-border-interactive:#00AFB9;
+        --color-status-success-text:#008767; --color-status-success-bg:#E6F9F4; --color-status-info-text:#4A90E2; --color-status-info-bg:#EBF5FF; --color-status-danger-text:#D92D20; --color-status-danger-bg:#FEE4E2;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--color-bg-primary);color:var(--color-text-primary);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{color:var(--color-text-interactive);text-decoration:none}a:hover{color:var(--color-bg-interactive-hover)}
+    .site-header{background:var(--color-bg-nav-dark);color:var(--color-text-on-dark);border-bottom:1px solid rgba(255,255,255,.08)}
+    .site-header__inner{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+    .site-brand{font-weight:600;font-size:1rem;letter-spacing:.02em}
+    .container{max-width:1200px;margin:0 auto;padding:2rem}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-interactive);border:1px solid var(--color-border-default);padding:.5rem .75rem;border-radius:8px;background:var(--color-bg-secondary);margin-bottom:1rem}
+    .header{background:var(--color-bg-secondary);color:var(--color-text-primary);padding:2rem;border-radius:12px;border:1px solid var(--color-border-default);text-align:center;margin-bottom:1.5rem}
+    .title{font-size:clamp(1.75rem,4vw,2.25rem);margin:0;font-weight:600}
+    .subtitle{font-size:1rem;margin-top:.5rem;color:var(--color-text-secondary)}
+    .toc{background:var(--color-bg-secondary);padding:1.25rem;border-radius:12px;border:1px solid var(--color-border-default);margin-bottom:1.5rem}
+    .toc-title{font-size:1.25rem;margin-bottom:.75rem}.toc ul{list-style:none}.toc li{margin:.5rem 0}.toc a{color:var(--color-text-secondary)}.toc a:hover{color:var(--color-text-interactive)}
+    .section{background:var(--color-bg-secondary);border:1px solid var(--color-border-default);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
+    .section-title{font-size:1.25rem;margin-bottom:1rem}.subsection-title{font-size:1rem;color:var(--color-text-secondary);margin:1rem 0 .5rem 0}
+    .mapping-table{width:100%;border-collapse:collapse;margin-top:.75rem;font-size:.95rem}
+    .mapping-table th{background:#F3F4F6;text-align:left;padding:.75rem;border-bottom:1px solid var(--color-border-default)}
+    .mapping-table td{padding:.75rem;border-bottom:1px solid var(--color-border-default);vertical-align:top}
+    .field-name{font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;padding:.1rem .35rem;border-radius:6px;color:var(--color-text-interactive);background:#F0FDFF;border:1px solid #D1FAFE}
+    .info-box,.warning-box,.success-box{border-radius:10px;padding:1rem;margin:1rem 0;border:1px solid var(--color-border-default)}
+    .info-box{background:var(--color-status-info-bg);color:var(--color-status-info-text)}
+    .warning-box{background:var(--color-status-danger-bg);color:var(--color-status-danger-text)}
+    .success-box{background:var(--color-status-success-bg);color:var(--color-status-success-text)}
+    .info-title,.warning-title{font-weight:600;margin-bottom:.5rem}
+    .code-block{background:#F3F4F6;border:1px solid var(--color-border-default);border-radius:8px;padding:1rem;font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;white-space:pre-wrap;overflow-x:auto}
+    ul{padding-left:1.25rem}li{margin:.25rem 0}
+    @media (max-width:640px){.container{padding:1rem}.site-header__inner{padding:.75rem 1rem}}
+    </style>
 </head>
 <body>
-    <canvas id="threejs-canvas-push"></canvas>
-    
-    <div class="container">
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="site-brand">MoEngage Official Documentation</div>
+        </div>
+    </header>
+
+    <main class="container">
         <a href="index.html" class="back-link">← Back to Home</a>
     <div class="header">
         <h1 class="title">Mapping of Braze Push Campaign to MoEngage Push Campaign</h1>
@@ -34,25 +72,58 @@
         <h2 class="toc-title">Table of Contents</h2>
         <ul>
             <li><a href="#overview">1. Overview</a></li>
-            <li><a href="#campaign-metadata">2. Campaign Metadata</a></li>
-            <li><a href="#scheduling">3. Scheduling Configuration</a></li>
-            <li><a href="#constant-fields">4. Constant Fields (Hardcoded Mappings)</a></li>
-            <li><a href="#push-content">5. Push Content Mapping</a></li>
-            <li><a href="#android-content">6. Android Push Content</a></li>
-            <li><a href="#ios-content">7. iOS Push Content</a></li>
-            <li><a href="#web-content">8. Web Push Content</a></li>
-            <li><a href="#variations">9. Variations and Control Groups</a></li>
+            <li><a href="#base-payload">2. Base Payload</a></li>
+            <li><a href="#campaign-metadata">3. Campaign Metadata</a></li>
+            <li><a href="#scheduling">4. Scheduling Configuration</a></li>
+            <li><a href="#constant-fields">5. Constant Fields (Hardcoded Mappings)</a></li>
+            <li><a href="#triggers-segmentation">6. Triggers & Segmentation</a></li>
+            <li><a href="#push-content">7. Push Content Mapping</a></li>
+            <li><a href="#android-content">8. Android Push Content</a></li>
+            <li><a href="#ios-content">9. iOS Push Content</a></li>
+            <li><a href="#web-content">10. Web Push Content</a></li>
+            <li><a href="#conversions">11. Conversions</a></li>
+            <li><a href="#platform-selection">12. Platform Selection, Variations & Pruning</a></li>
+            <li><a href="#variations">13. Variations and Control Groups</a></li>
         </ul>
     </div>
 
     <section class="section" id="overview">
         <h2 class="section-title">1. Overview</h2>
         <p>This section details the mapping for Braze Push Notification campaigns to the MoEngage platform, covering Android, iOS, and Web platforms. The push migrator script handles platform-specific content mapping while ensuring consistent behavior across all notification types.</p>
-        
         <div class="info-box">
             <div class="info-title">Platform Support</div>
             <p>This mapping guide covers push notifications for Android, iOS, and Web platforms. Each platform has specific field mappings and content requirements that are handled by the migration script.</p>
         </div>
+    </section>
+
+    <section class="section" id="base-payload">
+        <h2 class="section-title">2. Base Payload</h2>
+        <p>The base structure initializes selected platforms, default segmentation, timezone, and TTL.</p>
+        <div class="code-block">{
+  "campaign_data": {
+    "stepStatus": true,
+    "is_jinja": true,
+    "is_react": true,
+    "selectedTargetaudience": "custom_filters",
+    "c_at_trigger_seg_v2": { "included_filters": { "filter_operator": "or", "filters": [ { "filter_type": "actions", "action_name": "MOE_APP_OPENED", "execution": { "type": "atleast", "count": 1 }, "executed": true, "attributes": { "filter_operator": "and", "filters": [] } } ] } },
+    "c_at_act_seg_v2": { "included_filters": { "filter_operator": "and", "filters": [] } },
+    "timeValue": 0, "multiplier": 1, "triggerRelation": "after", "triggerAttr": "If Action",
+    "campaignName": "Default Push Campaign",
+    "selectedPlatform": ["ANDROID", "IOS", "WEB"],
+    "selectedPlatformName": ["ANDROID", "IOS", "WEB"],
+    "new_segmentation_data": { "included_filters": { "filter_operator": "and", "filters": [ { "filter_type": "custom_segments", "name": "All Users", "id": "moe_all_users" } ] } },
+    "tag_ids": [], "action": "create",
+    "ttl": "36", "ttl_type": "hour",
+    "ANDROID": {"sendWithPriority": "normal", "channel_id": "moe_default_channel", "msgtitle": "", "msg": "", "actionArray": [{"type": "deeplinking", "deeplinkingURL": ""}], "widgetArray": []},
+    "IOS": {"interruption-level": "active", "title": "", "body": "", "actionArray": [{"type": "deeplinking", "deeplinkingURL": ""}], "widgetArray": []},
+    "WEB": {"msgtitle": "", "msg": "", "redirectURL": "", "widgetArray": []},
+    "conversion": {"primary": {"action": null, "goal_name": "Goal 1"}},
+    "timezone": ["<tzName>", "<tzOffset>"],
+    "timezoneName": "<tzName>",
+    "bypass_dnd": false,
+    "var_p": {"ANDROID": {"1": 100}, "IOS": {"1": 100}, "WEB": {"1": 100}}
+  }
+}</div>
     </section>
 
     <section class="section" id="campaign-metadata">
@@ -109,10 +180,16 @@
                 </tr>
             </tbody>
         </table>
+        <h3 class="subsection-title">Additional Details</h3>
+        <ul>
+            <li><strong>Action-Based:</strong> Sets <span class="field-name">campaignType</span> = "Autotrigger Campaign"; <span class="field-name">delivery</span> = "trigger". If <span class="field-name">trigger_schedule_data.trigger_delay_in_seconds</span> > 0, then <span class="field-name">triggerDelayType</span> = "delay" and <span class="field-name">minDelaySmartTrig</span> = minutes (rounded). Otherwise <span class="field-name">triggerDelayType</span> = "asap". If <span class="field-name">start_time</span> is present, <span class="field-name">laterDate</span> and <span class="field-name">time</span> are set. <span class="field-name">stExpiryDate</span> and <span class="field-name">stExpiryTime</span> are set from <span class="field-name">end_time</span> or default to one year after start.</li>
+            <li><strong>Time-Based Recurring:</strong> Sets <span class="field-name">campaignType</span> = "General Push Campaign"; <span class="field-name">delivery</span> = "periodic"; populates <span class="field-name">dt</span> (ISO8601 with milliseconds + Z), <span class="field-name">periodicStartDate</span>, <span class="field-name">periodicTime</span>, <span class="field-name">periodicTimezone</span> = [tzName, tzOffset], <span class="field-name">periodicExpireDate</span>, <span class="field-name">periodicExpireTime</span>. Fills <span class="field-name">schedule_info</span> with <span class="field-name">recur_type</span> (DAILY/WEEKLY/MONTHLY) and frequency fields; weekly maps Braze weekdays to 0–6 (Mon–Sun); monthly sets <span class="field-name">days_of_month</span> to the start date's day.</li>
+            <li><strong>Time-Based One-Time:</strong> Sets <span class="field-name">delivery</span> = "later"; populates <span class="field-name">dt</span>, <span class="field-name">laterDate</span>, and <span class="field-name">time</span>.</li>
+        </ul>
     </section>
 
     <section class="section" id="constant-fields">
-        <h2 class="section-title">4. Constant Fields (Hardcoded Mappings)</h2>
+        <h2 class="section-title">5. Constant Fields (Hardcoded Mappings)</h2>
         <p>Based on our requirements, several MoEngage fields are set to constant default values, ignoring any corresponding data from Braze to ensure consistency.</p>
         <table class="mapping-table">
             <thead>
@@ -133,6 +210,13 @@
                     <td>Ensures a consistent default audience for all migrated campaigns.</td>
                 </tr>
                 <tr>
+                    <td><strong>TTL</strong></td>
+                    <td>N/A (Ignored)</td>
+                    <td><span class="field-name">ttl</span>, <span class="field-name">ttl_type</span></td>
+                    <td>"36", "hour"</td>
+                    <td>Default message TTL configuration.</td>
+                </tr>
+                <tr>
                     <td><strong>Campaign Trigger</strong></td>
                     <td>N/A (Ignored)</td>
                     <td><span class="field-name">c_at_trigger_seg_v2</span></td>
@@ -146,10 +230,13 @@
     <section class="section" id="push-content">
         <h2 class="section-title">5. Push Content Mapping</h2>
         <p>Content is extracted from the first available push variation for each platform (<span class="field-name">androidPush</span>, <span class="field-name">iosPush</span>, <span class="field-name">webPush</span>).</p>
-        
         <div class="info-box">
             <div class="info-title">Personalization and Image Handling</div>
             <p>All text fields are processed to convert Braze's Liquid syntax (e.g., <span class="field-name">{{${user_name}}}</span>) to MoEngage's Jinja syntax (e.g., <span class="field-name">{{ user.name }}</span>). Image URLs are processed by a CDN migrator to move them from Braze's CDN to MoEngage's CDN.</p>
+        </div>
+        <div class="info-box">
+            <div class="info-title">Content Sanitization</div>
+            <p>HTML tags are stripped from titles and messages; values are trimmed. Overlength strings are truncated with an ellipsis according to platform limits.</p>
         </div>
     </section>
 
@@ -272,10 +359,10 @@
                 </tr>
                 <tr>
                     <td><strong>Image URL</strong></td>
-                    <td><span class="field-name">messaging_actions[].large_image_url</span> or <span class="field-name">image_url</span></td>
-                    <td><span class="field-name">campaign_data.WEB.imageUrl</span></td>
+                    <td><span class="field-name">messaging_actions[].image_url</span> or <span class="field-name">large_image_url</span></td>
+                    <td><span class="field-name">campaign_data.WEB.imageUrl</span> and <span class="field-name">campaign_data.WEB.widgetArray[0].inputImageURL</span></td>
                     <td>Migrate to MoEngage CDN</td>
-                    <td>Prefers large_image_url, falls back to image_url</td>
+                    <td>Prefers image_url, falls back to large_image_url; also adds widgetArray image</td>
                 </tr>
                 <tr>
                     <td><strong>Redirect URL</strong></td>
@@ -288,13 +375,44 @@
         </table>
     </section>
 
+    <section class="section" id="conversions">
+        <h2 class="section-title">10. Conversions</h2>
+        <p>When Braze <span class="field-name">conversion_behaviors</span> are present, they are mapped to <span class="field-name">campaign_data.conversion</span> with a <strong>primary</strong> goal (first item) and all others as <strong>secondary</strong>.</p>
+        <table class="mapping-table">
+            <thead>
+                <tr>
+                    <th>Braze Event</th>
+                    <th>MoEngage Action</th>
+                    <th>Goal Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>TrackedUserBehavior::MadeAnyPurchase</td><td>PURCHASE</td><td>Purchase Conversion</td></tr>
+                <tr><td>TrackedUserBehavior::UsedApp (type: open)</td><td>MOE_APP_OPENED</td><td>App Open</td></tr>
+                <tr><td>TrackedUserBehavior::UpgradedAppVersion</td><td>APP_VERSION_UPDATED</td><td>App Version Upgrade</td></tr>
+                <tr><td>TrackedUserBehavior::PerformedCustomEvent</td><td>Custom event name</td><td>Custom Event: &lt;name&gt;</td></tr>
+                <tr><td>Other/None</td><td>MOE_APP_OPENED</td><td>App Engagement</td></tr>
+            </tbody>
+        </table>
+        <p>Each goal uses <span class="field-name">filter_type</span> = "actions" and an empty <span class="field-name">attributes.filters</span> array.</p>
+    </section>
+
+    <section class="section" id="platform-selection">
+        <h2 class="section-title">12. Platform Selection, Variations & Pruning</h2>
+        <p>The first available message per platform is mapped. Active platforms are listed in <span class="field-name">selectedPlatform</span> and <span class="field-name">selectedPlatformName</span>.</p>
+        <ul>
+            <li><strong>Single Variation:</strong> Content is merged into base keys: <span class="field-name">ANDROID</span>, <span class="field-name">IOS</span>, <span class="field-name">WEB</span>.</li>
+            <li><strong>Multi-Variation:</strong> Base keys are removed and numbered keys are created: <span class="field-name">ANDROID_1</span>, <span class="field-name">ANDROID_2</span>, etc. The corresponding <span class="field-name">var_p</span> entry for the platform is rebuilt with percentages summing to 100 (remainder added to the last).</li>
+            <li><strong>Pruning:</strong> Any platform without content is removed from <span class="field-name">campaign_data</span> and its <span class="field-name">var_p</span> entry is deleted.</li>
+        </ul>
+    </section>
+
     <section class="section" id="variations">
-        <h2 class="section-title">9. Variations and Control Groups</h2>
+        <h2 class="section-title">12. Variations and Control Groups</h2>
         <div class="warning-box">
             <div class="warning-title">⚠️ Multi-Variation Not Supported for Push</div>
             <p>The current push notification migration script does not support A/B testing or multi-variation messages. It is designed to migrate the <strong>first available push message</strong> for each platform (Android, iOS, Web) found in the Braze campaign.</p>
         </div>
-
         <div class="info-box">
             <div class="info-title">Single Platform Migration</div>
             <p>For each platform, the migrator extracts content from the first messaging action that matches the platform type. If multiple variations exist for the same platform in Braze, only the first one will be migrated. Consider consolidating variations before migration or running separate migrations for each variation.</p>
@@ -334,198 +452,16 @@
             </tbody>
         </table>
     </section>
+    </main>
 
     <script>
-        // Three.js Push Background
-        let scene, camera, renderer, notificationMeshes, pulseRings;
-        
-        function initPushThreeJS() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-canvas-push'), alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            notificationMeshes = new THREE.Group();
-            pulseRings = new THREE.Group();
-            
-            // Create notification-like geometries (phones/devices)
-            for (let i = 0; i < 15; i++) {
-                // Phone/device shape
-                const deviceGeometry = new THREE.BoxGeometry(1, 2, 0.1);
-                const deviceMaterial = new THREE.MeshBasicMaterial({
-                    color: new THREE.Color().setHSL(0.1 + Math.random() * 0.8, 0.6, 0.5),
-                    transparent: true,
-                    opacity: 0.7,
-                    wireframe: true
-                });
-                
-                const deviceMesh = new THREE.Mesh(deviceGeometry, deviceMaterial);
-                deviceMesh.position.set(
-                    (Math.random() - 0.5) * 80,
-                    (Math.random() - 0.5) * 80,
-                    (Math.random() - 0.5) * 80
-                );
-                deviceMesh.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                
-                notificationMeshes.add(deviceMesh);
-                
-                // Notification bubble above device
-                const bubbleGeometry = new THREE.SphereGeometry(0.3, 8, 6);
-                const bubbleMaterial = new THREE.MeshBasicMaterial({
-                    color: 0x00d4ff,
-                    transparent: true,
-                    opacity: 0.8
-                });
-                
-                const bubbleMesh = new THREE.Mesh(bubbleGeometry, bubbleMaterial);
-                bubbleMesh.position.copy(deviceMesh.position);
-                bubbleMesh.position.y += 1.5;
-                
-                notificationMeshes.add(bubbleMesh);
-            }
-            
-            // Create pulse rings for notification effect
-            for (let i = 0; i < 8; i++) {
-                const ringGeometry = new THREE.RingGeometry(2, 2.5, 16);
-                const ringMaterial = new THREE.MeshBasicMaterial({
-                    color: 0xff3366,
-                    transparent: true,
-                    opacity: 0.3,
-                    side: THREE.DoubleSide
-                });
-                
-                const ringMesh = new THREE.Mesh(ringGeometry, ringMaterial);
-                ringMesh.position.set(
-                    (Math.random() - 0.5) * 60,
-                    (Math.random() - 0.5) * 60,
-                    (Math.random() - 0.5) * 60
-                );
-                ringMesh.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                
-                pulseRings.add(ringMesh);
-            }
-            
-            scene.add(notificationMeshes);
-            scene.add(pulseRings);
-            
-            camera.position.z = 40;
-            
-            animatePush();
-        }
-        
-        function animatePush() {
-            requestAnimationFrame(animatePush);
-            
-            const time = Date.now() * 0.001;
-            
-            // Rotate notification group
-            notificationMeshes.rotation.x += 0.001;
-            notificationMeshes.rotation.y += 0.002;
-            
-            // Animate individual notifications
-            notificationMeshes.children.forEach((mesh, index) => {
-                if (index % 2 === 0) { // Devices
-                    mesh.rotation.y += 0.005;
-                    mesh.position.y += Math.sin(time + index) * 0.01;
-                } else { // Notification bubbles
-                    mesh.scale.setScalar(1 + Math.sin(time * 2 + index) * 0.1);
-                }
-            });
-            
-            // Animate pulse rings
-            pulseRings.children.forEach((ring, index) => {
-                ring.scale.setScalar(1 + Math.sin(time * 3 + index * 0.5) * 0.3);
-                ring.material.opacity = 0.3 + Math.sin(time * 2 + index) * 0.2;
-                ring.rotation.z += 0.01;
-            });
-            
-            renderer.render(scene, camera);
-        }
-        
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString();
-        document.getElementById('footer-date').textContent = new Date().toLocaleDateString();
-        
-        // Add scroll animations with 3D effects
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section');
-            const scrolled = window.pageYOffset;
-            
-            // 3D parallax effect
-            if (notificationMeshes) {
-                notificationMeshes.rotation.z = scrolled * 0.0001;
-                pulseRings.rotation.x = scrolled * 0.0002;
-            }
-            
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                
-                if (rect.top < window.innerHeight - 100) {
-                    section.style.opacity = '1';
-                    section.style.transform = `translateY(0) perspective(1000px) rotateY(0deg)`;
-                } else {
-                    section.style.transform = `translateY(30px) perspective(1000px) rotateY(-3deg)`;
-                }
-            });
-        });
-        
-        // Initialize sections with 3D animation styles
-        document.addEventListener('DOMContentLoaded', () => {
-            initPushThreeJS();
-            
-            const sections = document.querySelectorAll('.section');
-            sections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(30px) perspective(1000px) rotateY(-3deg)';
-                section.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.15}s`;
-                section.style.transformStyle = 'preserve-3d';
-            });
-            
-            // Add 3D hover effects to info boxes
-            const infoBoxes = document.querySelectorAll('.info-box, .warning-box');
-            infoBoxes.forEach(box => {
-                box.addEventListener('mouseenter', () => {
-                    box.style.transform = 'perspective(1000px) rotateY(-5deg) translateZ(15px)';
-                });
-                box.addEventListener('mouseleave', () => {
-                    box.style.transform = 'perspective(1000px) rotateY(0deg) translateZ(0px)';
-                });
-            });
-            
-            // Trigger initial animation
-            setTimeout(() => {
-                window.dispatchEvent(new Event('scroll'));
-            }, 100);
-        });
-        
-        // Handle resize for Three.js
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-        
-        // Mouse movement effect for 3D scene
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-            
-            if (notificationMeshes && pulseRings) {
-                notificationMeshes.rotation.x += mouseY * 0.001;
-                notificationMeshes.rotation.y += mouseX * 0.001;
-                pulseRings.rotation.x += mouseY * 0.002;
-                pulseRings.rotation.y += mouseX * 0.002;
-            }
-        });
+        (function(){
+            var d = new Date().toLocaleDateString();
+            var cd = document.getElementById('current-date');
+            var fd = document.getElementById('footer-date');
+            if (cd) cd.textContent = d;
+            if (fd) fd.textContent = d;
+        })();
     </script>
-</div>
 </body>
 </html>

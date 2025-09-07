@@ -3,395 +3,498 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Email Campaign Mapping - Braze to MoEngage</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <title>Email Campaign Mapping - MoEngage Official Documentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root {
+        --color-bg-primary:#F9FAFB; --color-bg-secondary:#FFFFFF; --color-bg-nav-dark:#1D244F; --color-bg-interactive:#00AFB9; --color-bg-interactive-hover:#009DA6;
+        --color-text-primary:#111827; --color-text-secondary:#6B7280; --color-text-interactive:#00AFB9; --color-text-on-dark:#FFFFFF; --color-text-on-interactive:#FFFFFF;
+        --color-border-default:#E5E7EB; --color-border-interactive:#00AFB9;
+        --color-status-success-text:#008767; --color-status-success-bg:#E6F9F4; --color-status-info-text:#4A90E2; --color-status-info-bg:#EBF5FF; --color-status-danger-text:#D92D20; --color-status-danger-bg:#FEE4E2;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--color-bg-primary);color:var(--color-text-primary);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{color:var(--color-text-interactive);text-decoration:none}a:hover{color:var(--color-bg-interactive-hover)}
+    .site-header{background:var(--color-bg-nav-dark);color:var(--color-text-on-dark);border-bottom:1px solid rgba(255,255,255,.08)}
+    .site-header__inner{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+    .site-brand{font-weight:600;font-size:1rem;letter-spacing:.02em}
+    .container{max-width:1200px;margin:0 auto;padding:2rem}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-interactive);border:1px solid var(--color-border-default);padding:.5rem .75rem;border-radius:8px;background:var(--color-bg-secondary);margin-bottom:1rem}
+    .header{background:var(--color-bg-secondary);color:var(--color-text-primary);padding:2rem;border-radius:12px;border:1px solid var(--color-border-default);text-align:center;margin-bottom:1.5rem}
+    .title{font-size:clamp(1.75rem,4vw,2.25rem);margin:0;font-weight:600}
+    .subtitle{font-size:1rem;margin-top:.5rem;color:var(--color-text-secondary)}
+    .toc{background:var(--color-bg-secondary);padding:1.25rem;border-radius:12px;border:1px solid var(--color-border-default);margin-bottom:1.5rem}
+    .toc-title{font-size:1.25rem;margin-bottom:.75rem}.toc ul{list-style:none}.toc li{margin:.5rem 0}.toc a{color:var(--color-text-secondary)}.toc a:hover{color:var(--color-text-interactive)}
+    .section{background:var(--color-bg-secondary);border:1px solid var(--color-border-default);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
+    .section-title{font-size:1.25rem;margin-bottom:1rem}.subsection-title{font-size:1rem;color:var(--color-text-secondary);margin:1rem 0 .5rem 0}
+    .mapping-table{width:100%;border-collapse:collapse;margin-top:.75rem;font-size:.95rem}
+    .mapping-table th{background:#F3F4F6;text-align:left;padding:.75rem;border-bottom:1px solid var(--color-border-default)}
+    .mapping-table td{padding:.75rem;border-bottom:1px solid var(--color-border-default);vertical-align:top}
+    .field-name{font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;padding:.1rem .35rem;border-radius:6px;color:var(--color-text-interactive);background:#F0FDFF;border:1px solid #D1FAFE}
+    .info-box,.warning-box,.success-box{border-radius:10px;padding:1rem;margin:1rem 0;border:1px solid var(--color-border-default)}
+    .info-box{background:var(--color-status-info-bg);color:var(--color-status-info-text)}
+    .warning-box{background:var(--color-status-danger-bg);color:var(--color-status-danger-text)}
+    .success-box{background:var(--color-status-success-bg);color:var(--color-status-success-text)}
+    .info-title,.warning-title{font-weight:600;margin-bottom:.5rem}
+    .code-block{background:#F3F4F6;border:1px solid var(--color-border-default);border-radius:8px;padding:1rem;font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;white-space:pre-wrap;overflow-x:auto}
+    ul{padding-left:1.25rem}li{margin:.25rem 0}
+    @media (max-width:640px){.container{padding:1rem}.site-header__inner{padding:.75rem 1rem}}
+    </style>
 </head>
 <body>
-    <canvas id="threejs-canvas-email"></canvas>
-    
-    <div class="container">
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="site-brand">MoEngage Official Documentation</div>
+        </div>
+    </header>
+
+    <main class="container">
         <a href="index.html" class="back-link">← Back to Home</a>
-    <div class="header">
-        <h1 class="title">Mapping of Braze Email Campaign to MoEngage Email Campaign</h1>
-        <p class="subtitle">Comprehensive Field Mapping and Transformation Guide</p>
-    </div>
-    
-    <div class="meta-info">
-        <div class="meta-item">
-            <span class="meta-label">Document Version:</span> 1.0
+        <div class="header">
+            <h1 class="title">Mapping of Braze Email Campaign to MoEngage Email Campaign</h1>
+            <p class="subtitle">Comprehensive Field Mapping and Transformation Guide</p>
         </div>
-        <div class="meta-item">
-            <span class="meta-label">Last Updated:</span> <span id="current-date"></span>
+
+        <div class="meta-info">
+            <div class="meta-item">
+                <span class="meta-label">Document Version:</span> 1.0
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Last Updated:</span> <span id="current-date"></span>
+            </div>
+            <div class="meta-item">
+                <span class="meta-label">Document Type:</span> Technical Specification
+            </div>
         </div>
-        <div class="meta-item">
-            <span class="meta-label">Document Type:</span> Technical Specification
-        </div>
-    </div>
-    
-    <div class="toc">
-        <h2 class="toc-title">Table of Contents</h2>
-        <ul>
-            <li><a href="#overview">1. Overview</a></li>
-            <li><a href="#how-to-read">2. How to Read This Document</a></li>
-            <li><a href="#campaign-metadata">3. Campaign Metadata Mapping</a></li>
-            <li><a href="#scheduling">4. Scheduling Configuration</a></li>
-            <li><a href="#email-content">5. Email Content Mapping</a></li>
-            <li><a href="#variations">6. Variations and Control Groups</a></li>
-            <li><a href="#defaults">7. Defaults and Fallbacks</a></li>
-            <li><a href="#not-mapped">8. Fields Not Mapped</a></li>
-            <li><a href="#examples">9. Implementation Examples</a></li>
-            <li><a href="#faq">10. Frequently Asked Questions</a></li>
-        </ul>
-    </div>
-    
-    <section class="section" id="overview">
-        <h2 class="section-title">1. Overview</h2>
-        <p>This document provides a comprehensive mapping guide for converting Braze email campaign exports to MoEngage campaign payloads. It serves as a reference for developers, system integrators, and technical teams involved in campaign migration or synchronization between these platforms.</p>
-        
-        <div class="info-box">
-            <div class="info-title">Purpose</div>
-            <p>Use this guide for reviewing, debugging, or extending the conversion logic between Braze and MoEngage email campaigns. All mappings are based on the latest API specifications and tested conversion patterns.</p>
-        </div>
-    </section>
-    
-    <section class="section" id="how-to-read">
-        <h2 class="section-title">2. How to Read This Document</h2>
-        <p>Each mapping section contains the following information structure:</p>
-        <ul>
-            <li><strong>Braze:</strong> Source field path in the Braze campaign export</li>
-            <li><strong>MoEngage:</strong> Destination field path in the MoEngage payload</li>
-            <li><strong>Transform:</strong> Description of value transformation (if any)</li>
-            <li><strong>Notes:</strong> Additional context, special behavior, or constraints</li>
-        </ul>
-    </section>
-    
-    <section class="section" id="campaign-metadata">
-        <h2 class="section-title">3. Campaign Metadata Mapping</h2>
-        
-        <h3 class="subsection-title">Campaign Name</h3>
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Braze Path</th>
-                    <th>MoEngage Path</th>
-                    <th>Transform</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Campaign Name</strong></td>
-                    <td><span class="field-name">campaign.campaign_name</span></td>
-                    <td><span class="field-name">campaign_data.campaignName</span></td>
-                    <td>Copy as-is</td>
-                    <td>Sets the final campaign name in MoEngage interface</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-    
-    <section class="section" id="scheduling">
-        <h2 class="section-title">4. Scheduling Configuration</h2>
-        
-        <h3 class="subsection-title">Time-Based Scheduling</h3>
-        <p>Applied when <span class="field-name">schedule_type == "time_based"</span> and <span class="field-name">schedule_data.start_date_time</span> exists.</p>
-        
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Braze Path</th>
-                    <th>MoEngage Path</th>
-                    <th>Transform</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Start Date/Time</strong></td>
-                    <td><span class="field-name">campaign.schedule_data.start_date_time</span></td>
-                    <td>
-                        <span class="field-name">campaign_data.delivery-later-date</span><br>
-                        <span class="field-name">campaign_data.delivery-later-time</span><br>
-                        <span class="field-name">campaign_data.dt</span><br>
-                        <span class="field-name">campaign_data.laterDate</span><br>
-                        <span class="field-name">campaign_data.time</span>
-                    </td>
-                    <td>
-                        Convert epoch seconds to:<br>
-                        • MM/DD/YYYY format<br>
-                        • hh:mm am/pm format<br>
-                        • ISO8601 + Z format
-                    </td>
-                    <td>MoEngage expects formatted strings. Timezone defaults used as Braze sample doesn't include timezone information.</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="warning-box">
-            <div class="warning-title">⚠️ Timezone Handling</div>
-            <p>The current implementation uses default timezone settings since Braze export samples don't include timezone information. Consider implementing timezone detection for production use.</p>
-        </div>
-    </section>
-    
-    <section class="section" id="email-content">
-        <h2 class="section-title">5. Email Content Mapping</h2>
-        
-        <p>Content is extracted from the <strong>first non-control email variation</strong> where <span class="field-name">message_type == "email"</span> and <span class="field-name">is_control == false</span>.</p>
-        
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Content Field</th>
-                    <th>Braze Path</th>
-                    <th>MoEngage Path</th>
-                    <th>Transform</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Subject Line</strong></td>
-                    <td><span class="field-name">messaging_actions[].email_subject</span></td>
-                    <td>
-                        <span class="field-name">campaign_data.email_subject</span><br>
-                        <span class="field-name">campaign_data.email_subject_html</span>
-                    </td>
-                    <td>Copy as-is</td>
-                    <td>HTML field mirrors subject for editor compatibility</td>
-                </tr>
-                <tr>
-                    <td><strong>Preheader</strong></td>
-                    <td><span class="field-name">messaging_actions[].preheader</span></td>
-                    <td>
-                        <span class="field-name">campaign_data.email_preview_text</span><br>
-                        <span class="field-name">campaign_data.email_preview_text_html</span>
-                    </td>
-                    <td>Copy as-is</td>
-                    <td>Preview text shown in email clients</td>
-                </tr>
-                <tr>
-                    <td><strong>HTML Body</strong></td>
-                    <td><span class="field-name">messaging_actions[].email_body</span></td>
-                    <td><span class="field-name">campaign_data.email_content</span></td>
-                    <td>Copy as-is</td>
-                    <td>Main email content</td>
-                </tr>
-                <tr>
-                    <td><strong>Sender Name</strong></td>
-                    <td><span class="field-name">messaging_actions[].from_display_name</span></td>
-                    <td>
-                        <span class="field-name">campaign_data.email_sender_name</span><br>
-                        <span class="field-name">campaign_data.extraData.email_sender_name_html</span>
-                    </td>
-                    <td>Copy as-is</td>
-                    <td>Display name for sender</td>
-                </tr>
-                <tr>
-                    <td><strong>From Address</strong></td>
-                    <td><span class="field-name">messaging_actions[].from_address</span></td>
-                    <td><span class="field-name">campaign_data.email_from_id</span></td>
-                    <td>Copy as-is</td>
-                    <td>Sender email address</td>
-                </tr>
-                <tr>
-                    <td><strong>Reply-To Address</strong></td>
-                    <td><span class="field-name">messaging_actions[].reply_to_address</span></td>
-                    <td>
-                        <span class="field-name">campaign_data.email_reply_id</span><br>
-                        <span class="field-name">campaign_data.extraData.email_reply_id_html</span>
-                    </td>
-                    <td>Use reply_to_address if present, otherwise use from_address</td>
-                    <td>Fallback mechanism ensures reply address is always set</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-    
-    <section class="section" id="variations">
-        <h2 class="section-title">6. Variations and Control Groups</h2>
-        
-        <h3 class="subsection-title">Non-Control Variations</h3>
-        <p>For variations where <span class="field-name">message_type == "email"</span> and <span class="field-name">is_control == false</span>:</p>
-        
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Braze Path</th>
-                    <th>MoEngage Path</th>
-                    <th>Transform</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Percent Allocation</strong></td>
-                    <td><span class="field-name">variation.send_percentage</span></td>
-                    <td><span class="field-name">campaign_data.var_p.EMAIL."i"</span></td>
-                    <td>Copy as-is (i = 1-based index)</td>
-                    <td>Index represents variation order</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <h3 class="subsection-title">Multi-Variation Content</h3>
-        <p>When there are multiple non-control variations, additional fields are populated:</p>
-        
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Configuration</th>
-                    <th>MoEngage Path</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Variation Type</strong></td>
-                    <td>
-                        <span class="field-name">campaign_data.variateType</span><br>
-                        <span class="field-name">campaign_data.m_v_type</span><br>
-                        <span class="field-name">campaign_data.m_v_data.type</span>
-                    </td>
-                    <td>"MMV" (Multi-Message Variation)</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <p>For each variation <em>i</em>, the following content is mapped to <span class="field-name">campaign_data.m_v_data.data."i"</span>:</p>
-        
-        <ul>
-            <li><span class="field-name">name</span> → variation name</li>
-            <li><span class="field-name">email_subject</span> → subject line</li>
-            <li><span class="field-name">email_preview_text</span> → preheader</li>
-            <li><span class="field-name">email_content</span> → HTML body</li>
-            <li><span class="field-name">email_sender_name</span> → sender display name</li>
-            <li><span class="field-name">email_from_id</span> → from address</li>
-            <li><span class="field-name">email_reply_id</span> → reply-to address (with fallback)</li>
-            <li><span class="field-name">percentage</span> → allocation percentage</li>
-        </ul>
-        
-        <h3 class="subsection-title">Control Groups</h3>
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Braze Path</th>
-                    <th>MoEngage Path</th>
-                    <th>Transform</th>
-                    <th>Notes</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Control Percentage</strong></td>
-                    <td>Sum of all <span class="field-name">send_percentage</span> where <span class="field-name">is_control == true</span></td>
-                    <td><span class="field-name">campaign_data.var_p.EMAIL."9"</span></td>
-                    <td>Sum all control percentages</td>
-                    <td>Key "9" specifically denotes control group</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
-    
-    <section class="section" id="defaults">
-        <h2 class="section-title">7. Defaults and Fallbacks</h2>
-        
-        <p>When Braze fields are missing or empty, the following defaults are applied:</p>
-        
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Missing Field</th>
-                    <th>Default Value</th>
-                    <th>Rationale</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><span class="field-name">email_subject</span></td>
-                    <td>"" (empty string)</td>
-                    <td>Allows manual entry in MoEngage</td>
-                </tr>
-                <tr>
-                    <td><span class="field-name">preheader</span></td>
-                    <td>"" (empty string)</td>
-                    <td>Optional field, can remain empty</td>
-                </tr>
-                <tr>
-                    <td><span class="field-name">email_body</span></td>
-                    <td>"" (empty string)</td>
-                    <td>Allows manual content creation</td>
-                </tr>
-                <tr>
-                    <td><span class="field-name">from_display_name</span></td>
-                    <td>"Default Sender"</td>
-                    <td>Provides recognizable sender name</td>
-                </tr>
-                <tr>
-                    <td><span class="field-name">from_address</span></td>
-                    <td>"from@example.com"</td>
-                    <td>Placeholder requiring manual update</td>
-                </tr>
-                <tr>
-                    <td><span class="field-name">reply_to_address</span></td>
-                    <td>Uses <span class="field-name">from_address</span></td>
-                    <td>Ensures reply functionality</td>
-                </tr>
-            </tbody>
-        </table>
-        
-        <div class="warning-box">
-            <div class="warning-title">⚠️ Production Considerations</div>
-            <p>Default email addresses should be updated with valid organizational addresses before campaign activation. Consider implementing validation rules for critical fields.</p>
-        </div>
-    </section>
-    
-    <section class="section" id="not-mapped">
-        <h2 class="section-title">8. Fields Not Mapped</h2>
-        
-        <p>The following MoEngage fields retain their default values and are not populated from Braze data:</p>
-        
-        <div class="info-box">
-            <div class="info-title">UTM Parameters</div>
-            <p>All UTM tracking parameters (<span class="field-name">utm_source</span>, <span class="field-name">utm_medium</span>, <span class="field-name">utm_campaign</span>, <span class="field-name">utm_term</span>, <span class="field-name">utm_content</span>) remain as MoEngage defaults.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Advanced Features</div>
+
+        <div class="toc">
+            <h2 class="toc-title">Table of Contents</h2>
             <ul>
-                <li><span class="field-name">email_content_json</span> - JSON email content structure</li>
-                <li><span class="field-name">attachments</span> - Email attachments</li>
-                <li><span class="field-name">test_campaign_info</span> - Test campaign metadata</li>
-                <li><span class="field-name">content_block_ids</span> - Reusable content blocks</li>
+                <li><a href="#overview">1. Overview</a></li>
+                <li><a href="#base-payload">2. Base Payload</a></li>
+                <li><a href="#how-to-read">3. How to Read This Document</a></li>
+                <li><a href="#campaign-metadata">4. Campaign Metadata Mapping</a></li>
+                <li><a href="#scheduling">5. Scheduling Configuration</a></li>
+                <li><a href="#email-content">6. Email Content Mapping</a></li>
+                <li><a href="#image-processing">7. Image Processing</a></li>
+                <li><a href="#variations">8. Variations and Control Groups</a></li>
+                <li><a href="#defaults">9. Defaults and Fallbacks</a></li>
+                <li><a href="#not-mapped">10. Fields Not Mapped</a></li>
+                <li><a href="#examples">11. Implementation Examples</a></li>
+                <li><a href="#faq">12. Frequently Asked Questions</a></li>
             </ul>
         </div>
-        
-        <div class="info-box">
-            <div class="info-title">System Configuration</div>
-            <ul>
-                <li><span class="field-name">connector</span> - Integration connector settings</li>
-                <li><span class="field-name">selectedTeam</span> - Team assignment</li>
-                <li><span class="field-name">campaign_content_type</span> - Content type classification</li>
-                <li><span class="field-name">userAttribute/email_attribute</span> - User targeting attributes</li>
-                <li><span class="field-name">c_view_ver</span> - Campaign view version</li>
-            </ul>
-        </div>
-    </section>
-    
-   <section class="section" id="examples">
-        <h2 class="section-title">9. Implementation Examples</h2>
-        
-        <div class="example-section">
-            <div class="example-title">Example A: Single Variation Campaign</div>
-            <p><strong>Scenario:</strong> Single non-control variation, no control group, scheduled delivery</p>
-            
-            <p><strong>Braze Input:</strong></p>
+
+        <section class="section" id="overview">
+            <h2 class="section-title">1. Overview</h2>
+            <p>This document provides a comprehensive mapping guide for converting Braze email campaign exports to MoEngage campaign payloads. It serves as a reference for developers, system integrators, and technical teams involved in campaign migration or synchronization between these platforms.</p>
+            <div class="info-box">
+                <div class="info-title">Purpose</div>
+                <p>Use this guide for reviewing, debugging, or extending the conversion logic between Braze and MoEngage email campaigns. All mappings are based on the latest API specifications and tested conversion patterns.</p>
+            </div>
+        </section>
+
+        <section class="section" id="base-payload">
+            <h2 class="section-title">2. Base Payload</h2>
+            <p>Initialized with defaults, UTM parameters, connectors, and trigger segmentation.</p>
             <div class="code-block">{
+  "campaign_data": {
+    "utm_params": {
+      "utm_source": {"utm_name": "utm_source", "is_enabled": true, "utm_value": "MoEngage"},
+      "utm_medium": {"utm_name": "utm_medium", "is_enabled": true, "utm_value": "{{Campaign Channel}}"},
+      "utm_campaign": {"utm_name": "utm_campaign", "is_enabled": true, "utm_value": "{{Campaign Name}}"}
+    },
+    "var_p": {"EMAIL": {"1": 100, "9": 0}},
+    "variateType": "SMV", "m_v_type": "SMV",
+    "m_v_data": {"m_v_type": "SMV", "type": "SMV", "data": {}},
+    "email_subject": "Default Subject",
+    "email_preview_text": "Default preview",
+    "email_content": "<html><body>Default Content</body></html>",
+    "email_sender_name": "Default Sender",
+    "email_from_id": "default@example.com",
+    "email_reply_id": "noreply@example.com",
+    "connector": {"readableName": "Sendgrid (default)", "name": "default", "type": "Sendgrid"},
+    "campaignName": "Default Campaign Name",
+    "timezone": ["<tzName>", "<tzOffset>"],
+    "timezoneName": "<tzName>",
+    "conversion": {"conversion_goals": []},
+    "global_control_enabled": false,
+    "action": "create", "c_c_g_v2": true, "c_s_is_new": true, "is_react": true,
+    "campaignType": "Email Triggers", "campaigntype": "email", "delivery": "trigger",
+    "triggerDelayType": "delay",
+    "selectedTargetaudience": "custom_filters",
+    "c_at_trigger_seg_v2": {"included_filters": {"filter_operator": "or", "filters": [{"filter_type": "actions", "action_name": "MOE_APP_OPENED", "execution": {"type": "atleast", "count": 1}}]}},
+    "new_segmentation_data": {"included_filters": {"filter_operator": "and", "filters": [{"filter_type": "custom_segments", "name": "All Users", "id": "moe_all_users"}]}}
+  }
+}</div>
+        </section>
+
+        <section class="section" id="how-to-read">
+            <h2 class="section-title">2. How to Read This Document</h2>
+            <p>Each mapping section contains the following information structure:</p>
+            <ul>
+                <li><strong>Braze:</strong> Source field path in the Braze campaign export</li>
+                <li><strong>MoEngage:</strong> Destination field path in the MoEngage payload</li>
+                <li><strong>Transform:</strong> Description of value transformation (if any)</li>
+                <li><strong>Notes:</strong> Additional context, special behavior, or constraints</li>
+            </ul>
+        </section>
+
+        <section class="section" id="campaign-metadata">
+            <h2 class="section-title">3. Campaign Metadata Mapping</h2>
+            <h3 class="subsection-title">Campaign Name</h3>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Braze Path</th>
+                        <th>MoEngage Path</th>
+                        <th>Transform</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Campaign Name</strong></td>
+                        <td><span class="field-name">campaign.campaign_name</span></td>
+                        <td><span class="field-name">campaign_data.campaignName</span></td>
+                        <td>Copy as-is</td>
+                        <td>Sets the final campaign name in MoEngage interface</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="scheduling">
+            <h2 class="section-title">5. Scheduling Configuration</h2>
+            <h3 class="subsection-title">Action-Based (Triggered)</h3>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>MoEngage Fields</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="field-name">schedule_type == "action_based"</span></td>
+                        <td>
+                            <span class="field-name">campaignType</span> = "Email Triggers"; <span class="field-name">campaigntype</span> = "email"; <span class="field-name">delivery</span> = "trigger"<br>
+                            <span class="field-name">triggerDelayType</span> = "delay" | "asap"; <span class="field-name">minDelaySmartTrig</span> = minutes<br>
+                            Optional <span class="field-name">laterDate</span>, <span class="field-name">time</span> from <span class="field-name">trigger_schedule_data.start_time</span><br>
+                            <span class="field-name">stExpiryDate</span>, <span class="field-name">stExpiryTime</span> from <span class="field-name">end_time</span> or +1 year
+                        </td>
+                        <td>Delay computed from <span class="field-name">trigger_schedule_data.trigger_delay_in_seconds</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">Time-Based (Scheduled/Recurring)</h3>
+            <p>Applied when <span class="field-name">schedule_type == "time_based"</span>.</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th>MoEngage Fields</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>One-Time Scheduled</td>
+                        <td><span class="field-name">delivery</span> = "later"; <span class="field-name">dt</span>, <span class="field-name">laterDate</span>, <span class="field-name">time</span></td>
+                        <td>Converts epoch to ISO8601 with ms + Z and UI-friendly date/time.</td>
+                    </tr>
+                    <tr>
+                        <td>Recurring</td>
+                        <td>
+                            <span class="field-name">delivery</span> = "periodic"; <span class="field-name">dt</span>, <span class="field-name">periodicStartDate</span>, <span class="field-name">periodicTime</span>, <span class="field-name">periodicTimezone</span><br>
+                            <span class="field-name">periodicExpireDate</span>, <span class="field-name">periodicExpireTime</span>; <span class="field-name">schedule_info.recur_type</span> DAILY/WEEKLY/MONTHLY
+                        </td>
+                        <td>Weekly maps weekdays Mon–Sun → 0–6; monthly uses start date's day.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Timezone Handling</div>
+                <p>The current implementation uses default timezone settings since Braze export samples don't include timezone information. Consider implementing timezone detection for production use.</p>
+            </div>
+        </section>
+
+        <section class="section" id="email-content">
+            <h2 class="section-title">6. Email Content Mapping</h2>
+            <p>Content is extracted from the <strong>first non-control email variation</strong> where <span class="field-name">message_type == "email"</span> and <span class="field-name">is_control == false</span>.</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Content Field</th>
+                        <th>Braze Path</th>
+                        <th>MoEngage Path</th>
+                        <th>Transform</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Subject Line</strong></td>
+                        <td><span class="field-name">messaging_actions[].email_subject</span></td>
+                        <td>
+                            <span class="field-name">campaign_data.email_subject</span><br>
+                            <span class="field-name">campaign_data.email_subject_html</span>
+                        </td>
+                        <td>Copy as-is</td>
+                        <td>HTML field mirrors subject for editor compatibility</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Preheader</strong></td>
+                        <td><span class="field-name">messaging_actions[].preheader</span></td>
+                        <td>
+                            <span class="field-name">campaign_data.email_preview_text</span><br>
+                            <span class="field-name">campaign_data.email_preview_text_html</span>
+                        </td>
+                        <td>Copy as-is</td>
+                        <td>Preview text shown in email clients</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HTML Body</strong></td>
+                        <td><span class="field-name">messaging_actions[].email_body</span></td>
+                        <td><span class="field-name">campaign_data.email_content</span></td>
+                        <td>Copy as-is</td>
+                        <td>Main email content</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sender Name</strong></td>
+                        <td><span class="field-name">messaging_actions[].from_display_name</span></td>
+                        <td>
+                            <span class="field-name">campaign_data.email_sender_name</span><br>
+                            <span class="field-name">campaign_data.extraData.email_sender_name_html</span>
+                        </td>
+                        <td>Copy as-is</td>
+                        <td>Display name for sender</td>
+                    </tr>
+                    <tr>
+                        <td><strong>From Address</strong></td>
+                        <td><span class="field-name">messaging_actions[].from_address</span></td>
+                        <td><span class="field-name">campaign_data.email_from_id</span></td>
+                        <td>Copy as-is</td>
+                        <td>Sender email address</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Reply-To Address</strong></td>
+                        <td><span class="field-name">messaging_actions[].reply_to_address</span></td>
+                        <td>
+                            <span class="field-name">campaign_data.email_reply_id</span><br>
+                            <span class="field-name">campaign_data.extraData.email_reply_id_html</span>
+                        </td>
+                        <td>Use reply_to_address if present, otherwise use from_address</td>
+                        <td>Fallback mechanism ensures reply address is always set</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="image-processing">
+            <h2 class="section-title">7. Image Processing</h2>
+            <p>All Braze CDN image URLs inside <span class="field-name">email_content</span> are downloaded and re-uploaded to MoEngage CDN, and URLs are replaced in-place.</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Step</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Upload API</td>
+                        <td><span class="field-name">POST {origin}/v1/platform/services/upload-file</span> (multipart/form-data)</td>
+                    </tr>
+                    <tr>
+                        <td>Headers</td>
+                        <td>Pass through existing headers; omit explicit <span class="field-name">content-type</span> so the client sets boundary.</td>
+                    </tr>
+                    <tr>
+                        <td>Replacement</td>
+                        <td>Every Braze URL found in HTML is replaced with the returned MoEngage CDN URL.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="info-box">
+                <div class="info-title">Sanitization Limits</div>
+                <ul>
+                    <li><span class="field-name">email_content</span>: truncated at MAX_EMAIL_CONTENT_SIZE</li>
+                    <li><span class="field-name">email_subject</span>: truncated at MAX_SUBJECT_LENGTH with ellipsis</li>
+                    <li><span class="field-name">preheader</span>: truncated at MAX_PREHEADER_LENGTH with ellipsis</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section" id="variations">
+            <h2 class="section-title">6. Variations and Control Groups</h2>
+            <h3 class="subsection-title">Non-Control Variations</h3>
+            <p>For variations where <span class="field-name">message_type == "email"</span> and <span class="field-name">is_control == false</span>:</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Braze Path</th>
+                        <th>MoEngage Path</th>
+                        <th>Transform</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Percent Allocation</strong></td>
+                        <td><span class="field-name">variation.send_percentage</span></td>
+                        <td><span class="field-name">campaign_data.var_p.EMAIL."i"</span></td>
+                        <td>Copy as-is (i = 1-based index)</td>
+                        <td>Index represents variation order</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3 class="subsection-title">Multi-Variation Content</h3>
+            <p>When there are multiple non-control variations, additional fields are populated:</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Configuration</th>
+                        <th>MoEngage Path</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Variation Type</strong></td>
+                        <td>
+                            <span class="field-name">campaign_data.variateType</span><br>
+                            <span class="field-name">campaign_data.m_v_type</span><br>
+                            <span class="field-name">campaign_data.m_v_data.type</span>
+                        </td>
+                        <td>"MMV" (Multi-Message Variation)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>For each variation <em>i</em>, the following content is mapped to <span class="field-name">campaign_data.m_v_data.data."i"</span>:</p>
+            <ul>
+                <li><span class="field-name">name</span> → variation name</li>
+                <li><span class="field-name">email_subject</span> → subject line</li>
+                <li><span class="field-name">email_preview_text</span> → preheader</li>
+                <li><span class="field-name">email_content</span> → HTML body</li>
+                <li><span class="field-name">email_sender_name</span> → sender display name</li>
+                <li><span class="field-name">email_from_id</span> → from address</li>
+                <li><span class="field-name">email_reply_id</span> → reply-to address (with fallback)</li>
+                <li><span class="field-name">percentage</span> → allocation percentage</li>
+            </ul>
+            <h3 class="subsection-title">Control Groups</h3>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Braze Path</th>
+                        <th>MoEngage Path</th>
+                        <th>Transform</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Control Percentage</strong></td>
+                        <td>Sum of all <span class="field-name">send_percentage</span> where <span class="field-name">is_control == true</span></td>
+                        <td><span class="field-name">campaign_data.var_p.EMAIL."9"</span></td>
+                        <td>Sum all control percentages</td>
+                        <td>Key "9" specifically denotes control group</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="defaults">
+            <h2 class="section-title">7. Defaults and Fallbacks</h2>
+            <p>When Braze fields are missing or empty, the following defaults are applied:</p>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Missing Field</th>
+                        <th>Default Value</th>
+                        <th>Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="field-name">email_subject</span></td>
+                        <td>"" (empty string)</td>
+                        <td>Allows manual entry in MoEngage</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">preheader</span></td>
+                        <td>"" (empty string)</td>
+                        <td>Optional field, can remain empty</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">email_body</span></td>
+                        <td>"" (empty string)</td>
+                        <td>Allows manual content creation</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">from_display_name</span></td>
+                        <td>"Default Sender"</td>
+                        <td>Provides recognizable sender name</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">from_address</span></td>
+                        <td>"from@example.com"</td>
+                        <td>Placeholder requiring manual update</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">reply_to_address</span></td>
+                        <td>Uses <span class="field-name">from_address</span></td>
+                        <td>Ensures reply functionality</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Production Considerations</div>
+                <p>Default email addresses should be updated with valid organizational addresses before campaign activation. Consider implementing validation rules for critical fields.</p>
+            </div>
+        </section>
+
+        <section class="section" id="not-mapped">
+            <h2 class="section-title">8. Fields Not Mapped</h2>
+            <p>The following MoEngage fields retain their default values and are not populated from Braze data:</p>
+            <div class="info-box">
+                <div class="info-title">UTM Parameters</div>
+                <p>All UTM tracking parameters (<span class="field-name">utm_source</span>, <span class="field-name">utm_medium</span>, <span class="field-name">utm_campaign</span>, <span class="field-name">utm_term</span>, <span class="field-name">utm_content</span>) remain as MoEngage defaults.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Advanced Features</div>
+                <ul>
+                    <li><span class="field-name">email_content_json</span> - JSON email content structure</li>
+                    <li><span class="field-name">attachments</span> - Email attachments</li>
+                    <li><span class="field-name">test_campaign_info</span> - Test campaign metadata</li>
+                    <li><span class="field-name">content_block_ids</span> - Reusable content blocks</li>
+                </ul>
+            </div>
+            <div class="info-box">
+                <div class="info-title">System Configuration</div>
+                <ul>
+                    <li><span class="field-name">connector</span> - Integration connector settings</li>
+                    <li><span class="field-name">selectedTeam</span> - Team assignment</li>
+                    <li><span class="field-name">campaign_content_type</span> - Content type classification</li>
+                    <li><span class="field-name">userAttribute/email_attribute</span> - User targeting attributes</li>
+                    <li><span class="field-name">c_view_ver</span> - Campaign view version</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section" id="examples">
+            <h2 class="section-title">9. Implementation Examples</h2>
+            <div class="example-section">
+                <div class="example-title">Example A: Single Variation Campaign</div>
+                <p><strong>Scenario:</strong> Single non-control variation, no control group, scheduled delivery</p>
+                <p><strong>Braze Input:</strong></p>
+                <div class="code-block">{
   "campaign": {
     "campaign_name": "Summer Sale Newsletter",
     "schedule_type": "time_based",
@@ -410,9 +513,8 @@
     ]
   }
 }</div>
-            
-            <p><strong>MoEngage Output (Key Fields):</strong></p>
-            <div class="code-block">{
+                <p><strong>MoEngage Output (Key Fields):</strong></p>
+                <div class="code-block">{
   "campaign_data": {
     "campaignName": "Summer Sale Newsletter",
     "delivery-later-date": "12/20/2024",
@@ -430,14 +532,12 @@
     "variateType": "SMV"
   }
 }</div>
-        </div>
-        
-        <div class="example-section">
-            <div class="example-title">Example B: Multi-Variation Campaign with Control</div>
-            <p><strong>Scenario:</strong> Two content variations (45% each) plus control group (10%)</p>
-            
-            <p><strong>Braze Input:</strong></p>
-            <div class="code-block">{
+            </div>
+            <div class="example-section">
+                <div class="example-title">Example B: Multi-Variation Campaign with Control</div>
+                <p><strong>Scenario:</strong> Two content variations (45% each) plus control group (10%)</p>
+                <p><strong>Braze Input:</strong></p>
+                <div class="code-block">{
   "campaign": {
     "campaign_name": "A/B Test Campaign",
     "messaging_actions": [
@@ -453,106 +553,17 @@
         "from_address": "marketing@company.com"
       },
       {
-        "message_type": "email", 
+        "message_type": "email",
         "is_control": false,
         "send_percentage": 45,
         "name": "Variation B",
         "email_subject": "Exclusive Savings Inside",
         "preheader": "Special deals just for you",
         "email_body": "&lt;p&gt;Personal savings await&lt;/p&gt;",
-        "from_display_name": "Marketing Team", 
-        "from_address": "marketing@company.com"
-      },
-      {
-        "message_type": "email",
-        "is_control": true,
-        "send_percentage": 10
-      }
-    ]
-  }
-}</div>
-            
-<section class="section" id="examples">
-        <h2 class="section-title">9. Implementation Examples</h2>
-        
-        <div class="example-section">
-            <div class="example-title">Example A: Single Variation Campaign</div>
-            <p><strong>Scenario:</strong> Single non-control variation, no control group, scheduled delivery</p>
-            
-            <p><strong>Braze Input:</strong></p>
-            <div class="code-block">{
-  "campaign": {
-    "campaign_name": "Summer Sale Newsletter",
-    "schedule_type": "time_based",
-    "schedule_data": {"start_date_time": 1734700000},
-    "messaging_actions": [
-      {
-        "message_type": "email",
-        "is_control": false,
-        "send_percentage": 100,
-        "email_subject": "🌞 Summer Sale - 50% Off!",
-        "preheader": "Don't miss our biggest sale of the year",
-        "email_body": "&lt;p&gt;Shop now and save big!&lt;/p&gt;",
-        "from_display_name": "Sales Team",
-        "from_address": "sales@company.com"
-      }
-    ]
-  }
-}</div>
-            
-            <p><strong>MoEngage Output (Key Fields):</strong></p>
-            <div class="code-block">{
-  "campaign_data": {
-    "campaignName": "Summer Sale Newsletter",
-    "delivery-later-date": "12/20/2024",
-    "delivery-later-time": "05:26 pm",
-    "dt": "2024-12-20T17:26:40Z",
-    "email_subject": "🌞 Summer Sale - 50% Off!",
-    "email_preview_text": "Don't miss our biggest sale of the year",
-    "email_content": "&lt;p&gt;Shop now and save big!&lt;/p&gt;",
-    "email_sender_name": "Sales Team",
-    "email_from_id": "sales@company.com",
-    "email_reply_id": "sales@company.com",
-    "var_p": {
-      "EMAIL": {"1": 100}
-    },
-    "variateType": "SMV"
-  }
-}</div>
-        </div>
-        
-        <div class="example-section">
-            <div class="example-title">Example B: Multi-Variation Campaign with Control</div>
-            <p><strong>Scenario:</strong> Two content variations (45% each) plus control group (10%)</p>
-            
-            <p><strong>Braze Input:</strong></p>
-            <div class="code-block">{
-  "campaign": {
-    "campaign_name": "A/B Test Campaign",
-    "messaging_actions": [
-      {
-        "message_type": "email",
-        "is_control": false,
-        "send_percentage": 45,
-        "name": "Variation A",
-        "email_subject": "Limited Time Offer!",
-        "preheader": "Act fast - sale ends soon",
-        "email_body": "&lt;p&gt;Urgent: Sale ending&lt;/p&gt;",
         "from_display_name": "Marketing Team",
         "from_address": "marketing@company.com"
       },
       {
-        "message_type": "email", 
-        "is_control": false,
-        "send_percentage": 45,
-        "name": "Variation B",
-        "email_subject": "Exclusive Savings Inside",
-        "preheader": "Special deals just for you",
-        "email_body": "&lt;p&gt;Personal savings await&lt;/p&gt;",
-        "from_display_name": "Marketing Team", 
-        "from_address": "marketing@company.com"
-      },
-      {
         "message_type": "email",
         "is_control": true,
         "send_percentage": 10
@@ -560,26 +571,25 @@
     ]
   }
 }</div>
-            
-            <p><strong>MoEngage Output (Key Fields):</strong></p>
-            <div class="code-block">{
+                <p><strong>MoEngage Output (Key Fields):</strong></p>
+                <div class="code-block">{
   "campaign_data": {
     "campaignName": "A/B Test Campaign",
     "var_p": {
       "EMAIL": {"1": 45, "2": 45, "9": 10}
     },
     "variateType": "MMV",
-    "m_v_type": "MMV", 
+    "m_v_type": "MMV",
     "m_v_data": {
       "type": "MMV",
       "data": {
         "1": {
           "name": "Variation A",
           "email_subject": "Limited Time Offer!",
-          "email_preview_text": "Act fast - sale ends soon", 
+          "email_preview_text": "Act fast - sale ends soon",
           "email_content": "&lt;p&gt;Urgent: Sale ending&lt;/p&gt;",
           "email_sender_name": "Marketing Team",
-          "email_from_id": "marketing@company.com", 
+          "email_from_id": "marketing@company.com",
           "email_reply_id": "marketing@company.com",
           "percentage": 45
         },
@@ -590,263 +600,103 @@
           "email_content": "&lt;p&gt;Personal savings await&lt;/p&gt;",
           "email_sender_name": "Marketing Team",
           "email_from_id": "marketing@company.com",
-          "email_reply_id": "marketing@company.com", 
+          "email_reply_id": "marketing@company.com",
           "percentage": 45
         }
       }
     }
   }
 }</div>
-        </div>
-    </section>
-    
-    <section class="section" id="faq">
-        <h2 class="section-title">10. Frequently Asked Questions</h2>
-        
-        <div class="info-box">
-            <div class="info-title">Q: Which variation fills the top-level subject/body fields in MoEngage?</div>
-            <p><strong>A:</strong> The FIRST non-control variation found in the Braze messaging_actions array. This ensures consistency and provides fallback content for single-variation campaigns.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Q: How is the control percentage represented in MoEngage?</div>
-            <p><strong>A:</strong> Control groups are represented using key "9" under <span class="field-name">campaign_data.var_p.EMAIL</span>. The percentage is the sum of all variations marked with <span class="field-name">is_control: true</span>.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Q: What happens when there's only one non-control variation?</div>
-            <p><strong>A:</strong> The campaign uses Single Message Variation (SMV) mode. Fields <span class="field-name">variateType</span> and <span class="field-name">m_v_type</span> are set to "SMV", and <span class="field-name">m_v_data</span> remains empty as no multi-variation structure is needed.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Q: What if reply_to_address is missing from Braze?</div>
-            <p><strong>A:</strong> The system automatically falls back to using the <span class="field-name">from_address</span> value. This ensures that reply functionality is always available even when not explicitly configured.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Q: How are timezone conversions handled?</div>
-            <p><strong>A:</strong> Currently, timezone information is not included in Braze export samples, so the conversion uses default timezone settings. For production implementations, consider adding explicit timezone handling based on account or campaign settings.</p>
-        </div>
-        
-        <div class="info-box">
-            <div class="info-title">Q: What validation should be performed after conversion?</div>
-            <p><strong>A:</strong> Key validation points include:
-            </p><ul>
-                <li>Verify all percentage allocations sum to 100%</li>
-                <li>Ensure from_address and reply_to addresses are valid</li>
-                <li>Check that scheduled dates are in the future</li>
-                <li>Validate HTML content doesn't contain malicious scripts</li>
-                <li>Confirm sender names meet organizational standards</li>
-            </ul>
-            <p></p>
-        </div>
-        
-        <div class="warning-box">
-            <div class="warning-title">⚠️ Important Implementation Notes</div>
-            <ul>
-                <li><strong>Testing Required:</strong> Always test converted campaigns in MoEngage staging environment before production deployment</li>
-                <li><strong>Content Validation:</strong> Review all content fields for proper encoding and formatting</li>
-                <li><strong>Permission Verification:</strong> Ensure sender addresses have proper authentication and reputation</li>
-                <li><strong>Compliance Check:</strong> Verify campaigns meet all regulatory requirements (GDPR, CAN-SPAM, etc.)</li>
-            </ul>
-        </div>
-    </section>
-    
-    <section class="section">
-        <h2 class="section-title">Document Information</h2>
-        <table class="mapping-table">
-            <thead>
-                <tr>
-                    <th>Field</th>
-                    <th>Value</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Document Version</strong></td>
-                    <td>1.0</td>
-                </tr>
-                <tr>
-                    <td><strong>Created Date</strong></td>
-                    <td id="footer-date"></td>
-                </tr>
-                <tr>
-                    <td><strong>Document Type</strong></td>
-                    <td>Technical Specification</td>
-                </tr>
-                <tr>
-                    <td><strong>Scope</strong></td>
-                    <td>Braze to MoEngage Email Campaign Migration</td>
-                </tr>
-                <tr>
-                    <td><strong>Target Audience</strong></td>
-                    <td>Developers, System Integrators, Technical Teams</td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+            </div>
+        </section>
+
+        <section class="section" id="faq">
+            <h2 class="section-title">10. Frequently Asked Questions</h2>
+            <div class="info-box">
+                <div class="info-title">Q: Which variation fills the top-level subject/body fields in MoEngage?</div>
+                <p><strong>A:</strong> The FIRST non-control variation found in the Braze messaging_actions array. This ensures consistency and provides fallback content for single-variation campaigns.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Q: How is the control percentage represented in MoEngage?</div>
+                <p><strong>A:</strong> Control groups are represented using key "9" under <span class="field-name">campaign_data.var_p.EMAIL</span>. The percentage is the sum of all variations marked with <span class="field-name">is_control: true</span>.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Q: What happens when there's only one non-control variation?</div>
+                <p><strong>A:</strong> The campaign uses Single Message Variation (SMV) mode. Fields <span class="field-name">variateType</span> and <span class="field-name">m_v_type</span> are set to "SMV", and <span class="field-name">m_v_data</span> remains empty as no multi-variation structure is needed.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Q: What if reply_to_address is missing from Braze?</div>
+                <p><strong>A:</strong> The system automatically falls back to using the <span class="field-name">from_address</span> value. This ensures that reply functionality is always available even when not explicitly configured.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Q: How are timezone conversions handled?</div>
+                <p><strong>A:</strong> Currently, timezone information is not included in Braze export samples, so the conversion uses default timezone settings. For production implementations, consider adding explicit timezone handling based on account or campaign settings.</p>
+            </div>
+            <div class="info-box">
+                <div class="info-title">Q: What validation should be performed after conversion?</div>
+                <p><strong>A:</strong> Key validation points include:</p>
+                <ul>
+                    <li>Verify all percentage allocations sum to 100%</li>
+                    <li>Ensure from_address and reply_to addresses are valid</li>
+                    <li>Check that scheduled dates are in the future</li>
+                    <li>Validate HTML content doesn't contain malicious scripts</li>
+                    <li>Confirm sender names meet organizational standards</li>
+                </ul>
+            </div>
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Important Implementation Notes</div>
+                <ul>
+                    <li><strong>Testing Required:</strong> Always test converted campaigns in MoEngage staging environment before production deployment</li>
+                    <li><strong>Content Validation:</strong> Review all content fields for proper encoding and formatting</li>
+                    <li><strong>Permission Verification:</strong> Ensure sender addresses have proper authentication and reputation</li>
+                    <li><strong>Compliance Check:</strong> Verify campaigns meet all regulatory requirements (GDPR, CAN-SPAM, etc.)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Document Information</h2>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Field</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Document Version</strong></td>
+                        <td>1.0</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Created Date</strong></td>
+                        <td id="footer-date"></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Document Type</strong></td>
+                        <td>Technical Specification</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Scope</strong></td>
+                        <td>Braze to MoEngage Email Campaign Migration</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Target Audience</strong></td>
+                        <td>Developers, System Integrators, Technical Teams</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
 
     <script>
-        // Three.js Email Background
-        let scene, camera, renderer, emailMesh, geometryGroup;
-        
-        function initEmailThreeJS() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('threejs-canvas-email'), alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            
-            // Create floating email-like geometries
-            geometryGroup = new THREE.Group();
-            
-            // Create multiple geometric shapes representing data flow
-            for (let i = 0; i < 20; i++) {
-                const geometry = new THREE.BoxGeometry(2, 1, 0.2);
-                const material = new THREE.MeshBasicMaterial({
-                    color: new THREE.Color().setHSL(0.6 + Math.random() * 0.2, 0.7, 0.6),
-                    transparent: true,
-                    opacity: 0.6,
-                    wireframe: true
-                });
-                
-                const mesh = new THREE.Mesh(geometry, material);
-                mesh.position.set(
-                    (Math.random() - 0.5) * 100,
-                    (Math.random() - 0.5) * 100,
-                    (Math.random() - 0.5) * 100
-                );
-                mesh.rotation.set(
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI,
-                    Math.random() * Math.PI
-                );
-                
-                geometryGroup.add(mesh);
-            }
-            
-            // Add connecting lines between shapes
-            const lineGeometry = new THREE.BufferGeometry();
-            const linePositions = [];
-            const lineColors = [];
-            
-            for (let i = 0; i < 50; i++) {
-                linePositions.push(
-                    (Math.random() - 0.5) * 200,
-                    (Math.random() - 0.5) * 200,
-                    (Math.random() - 0.5) * 200
-                );
-                lineColors.push(0, 0.8, 1); // Cyan color
-            }
-            
-            lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-            lineGeometry.setAttribute('color', new THREE.Float32BufferAttribute(lineColors, 3));
-            
-            const lineMaterial = new THREE.LineBasicMaterial({ 
-                vertexColors: true, 
-                transparent: true, 
-                opacity: 0.3 
-            });
-            const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            
-            scene.add(geometryGroup);
-            scene.add(lines);
-            
-            camera.position.z = 50;
-            
-            animateEmail();
-        }
-        
-        function animateEmail() {
-            requestAnimationFrame(animateEmail);
-            
-            geometryGroup.rotation.x += 0.002;
-            geometryGroup.rotation.y += 0.003;
-            
-            // Animate individual meshes
-            geometryGroup.children.forEach((mesh, index) => {
-                mesh.rotation.x += 0.01 + index * 0.001;
-                mesh.rotation.y += 0.008 + index * 0.001;
-                mesh.position.y += Math.sin(Date.now() * 0.001 + index) * 0.02;
-            });
-            
-            renderer.render(scene, camera);
-        }
-        
-        // Set current date
-        document.getElementById('current-date').textContent = new Date().toLocaleDateString();
-        document.getElementById('footer-date').textContent = new Date().toLocaleDateString();
-        
-        // Add scroll animations with 3D effects
-        window.addEventListener('scroll', () => {
-            const sections = document.querySelectorAll('.section');
-            const scrolled = window.pageYOffset;
-            const rate = scrolled * -0.5;
-            
-            // Parallax effect on 3D scene
-            if (geometryGroup) {
-                geometryGroup.rotation.z = scrolled * 0.0002;
-            }
-            
-            sections.forEach((section, index) => {
-                const rect = section.getBoundingClientRect();
-                const speed = (index + 1) * 0.1;
-                
-                if (rect.top < window.innerHeight - 100) {
-                    section.style.opacity = '1';
-                    section.style.transform = `translateY(0) perspective(1000px) rotateX(0deg)`;
-                } else {
-                    section.style.transform = `translateY(30px) perspective(1000px) rotateX(5deg)`;
-                }
-            });
-        });
-        
-        // Initialize sections with 3D animation styles
-        document.addEventListener('DOMContentLoaded', () => {
-            initEmailThreeJS();
-            
-            const sections = document.querySelectorAll('.section');
-            sections.forEach((section, index) => {
-                section.style.opacity = '0';
-                section.style.transform = 'translateY(30px) perspective(1000px) rotateX(5deg)';
-                section.style.transition = `all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${index * 0.1}s`;
-                section.style.transformStyle = 'preserve-3d';
-            });
-            
-            // Add 3D hover effects to tables
-            const tables = document.querySelectorAll('.mapping-table');
-            tables.forEach(table => {
-                table.addEventListener('mouseenter', () => {
-                    table.style.transform = 'perspective(1000px) rotateX(2deg) translateZ(10px)';
-                });
-                table.addEventListener('mouseleave', () => {
-                    table.style.transform = 'perspective(1000px) rotateX(0deg) translateZ(0px)';
-                });
-            });
-            
-            // Trigger initial animation
-            setTimeout(() => {
-                window.dispatchEvent(new Event('scroll'));
-            }, 100);
-        });
-        
-        // Handle resize for Three.js
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-        
-        // Mouse movement effect for 3D scene
-        document.addEventListener('mousemove', (e) => {
-            const mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-            const mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
-            
-            if (geometryGroup) {
-                geometryGroup.rotation.x += mouseY * 0.002;
-                geometryGroup.rotation.y += mouseX * 0.002;
-            }
-        });
+        (function(){
+            var d = new Date().toLocaleDateString();
+            var cd = document.getElementById('current-date');
+            var fd = document.getElementById('footer-date');
+            if (cd) cd.textContent = d;
+            if (fd) fd.textContent = d;
+        })();
     </script>
-</div>
 </body>
 </html>

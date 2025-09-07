@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMS Campaign Mapping - MoEngage Official Documentation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    :root { --color-bg-primary:#F9FAFB; --color-bg-secondary:#FFFFFF; --color-bg-nav-dark:#1D244F; --color-bg-interactive:#00AFB9; --color-bg-interactive-hover:#009DA6; --color-text-primary:#111827; --color-text-secondary:#6B7280; --color-text-interactive:#00AFB9; --color-text-on-dark:#FFFFFF; --color-text-on-interactive:#FFFFFF; --color-border-default:#E5E7EB; --color-border-interactive:#00AFB9; --color-status-success-text:#008767; --color-status-success-bg:#E6F9F4; --color-status-info-text:#4A90E2; --color-status-info-bg:#EBF5FF; --color-status-danger-text:#D92D20; --color-status-danger-bg:#FEE4E2; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{font-family:'Poppins',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;background:var(--color-bg-primary);color:var(--color-text-primary);line-height:1.6;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    a{color:var(--color-text-interactive);text-decoration:none}a:hover{color:var(--color-bg-interactive-hover)}
+    .site-header{background:var(--color-bg-nav-dark);color:var(--color-text-on-dark);border-bottom:1px solid rgba(255,255,255,.08)}
+    .site-header__inner{max-width:1200px;margin:0 auto;padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+    .site-brand{font-weight:600;font-size:1rem;letter-spacing:.02em}
+    .container{max-width:1200px;margin:0 auto;padding:2rem}
+    .back-link{display:inline-flex;align-items:center;gap:.5rem;color:var(--color-text-interactive);border:1px solid var(--color-border-default);padding:.5rem .75rem;border-radius:8px;background:var(--color-bg-secondary);margin-bottom:1rem}
+    .header{background:var(--color-bg-secondary);color:var(--color-text-primary);padding:2rem;border-radius:12px;border:1px solid var(--color-border-default);text-align:center;margin-bottom:1.5rem}
+    .title{font-size:clamp(1.75rem,4vw,2.25rem);margin:0;font-weight:600}
+    .subtitle{font-size:1rem;margin-top:.5rem;color:var(--color-text-secondary)}
+    .toc{background:var(--color-bg-secondary);padding:1.25rem;border-radius:12px;border:1px solid var(--color-border-default);margin-bottom:1.5rem}
+    .toc-title{font-size:1.25rem;margin-bottom:.75rem}.toc ul{list-style:none}.toc li{margin:.5rem 0}.toc a{color:var(--color-text-secondary)}.toc a:hover{color:var(--color-text-interactive)}
+    .section{background:var(--color-bg-secondary);border:1px solid var(--color-border-default);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
+    .section-title{font-size:1.25rem;margin-bottom:1rem}.subsection-title{font-size:1rem;color:var(--color-text-secondary);margin:1rem 0 .5rem 0}
+    .mapping-table{width:100%;border-collapse:collapse;margin-top:.75rem;font-size:.95rem}
+    .mapping-table th{background:#F3F4F6;text-align:left;padding:.75rem;border-bottom:1px solid var(--color-border-default)}
+    .mapping-table td{padding:.75rem;border-bottom:1px solid var(--color-border-default);vertical-align:top}
+    .field-name{font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;padding:.1rem .35rem;border-radius:6px;color:var(--color-text-interactive);background:#F0FDFF;border:1px solid #D1FAFE}
+    .info-box,.warning-box,.success-box{border-radius:10px;padding:1rem;margin:1rem 0;border:1px solid var(--color-border-default)}
+    .info-box{background:var(--color-status-info-bg);color:var(--color-status-info-text)}
+    .warning-box{background:var(--color-status-danger-bg);color:var(--color-status-danger-text)}
+    .success-box{background:var(--color-status-success-bg);color:var(--color-status-success-text)}
+    .info-title,.warning-title{font-weight:600;margin-bottom:.5rem}
+    .code-block{background:#F3F4F6;border:1px solid var(--color-border-default);border-radius:8px;padding:1rem;font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;white-space:pre-wrap;overflow-x:auto}
+    ul{padding-left:1.25rem}li{margin:.25rem 0}
+    @media (max-width:640px){.container{padding:1rem}.site-header__inner{padding:.75rem 1rem}}
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="site-brand">MoEngage Official Documentation</div>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-link">← Back to Home</a>
+        <div class="header">
+            <h1 class="title">Mapping of Braze SMS Campaign to MoEngage SMS Campaign</h1>
+            <p class="subtitle">Comprehensive Field Mapping and Transformation Guide for SMS</p>
+        </div>
+
+        <div class="toc">
+            <h2 class="toc-title">Table of Contents</h2>
+            <ul>
+                <li><a href="#base-payload">1. Base Payload</a></li>
+                <li><a href="#sender-settings">2. Sender Settings & Connector</a></li>
+                <li><a href="#scheduling">3. Scheduling Configuration</a></li>
+                <li><a href="#segmentation">4. Segmentation</a></li>
+                <li><a href="#content">5. Message Content & Variations</a></li>
+                <li><a href="#conversions">6. Conversions</a></li>
+            </ul>
+        </div>
+
+        <section class="section" id="base-payload">
+            <h2 class="section-title">1. Base Payload</h2>
+            <p>The base SMS payload is initialized with sane defaults and tokens for timezone and segmentation.</p>
+            <div class="code-block">{
+  "campaign_data": {
+    "campaignType": "sms",
+    "action": "create",
+    "c_c_g_v2": true,
+    "c_s_is_new": true,
+    "is_react": true,
+    "is_jinja": true,
+    "campaignName": "Default SMS Campaign",
+    "global_control_enabled": false,
+    "delivery": "later",
+    "conversion": {"conversion_goals": []},
+    "new_segmentation_data": {
+      "included_filters": {
+        "filter_operator": "and",
+        "filters": [
+          {"filter_type": "custom_segments", "name": "All Users", "id": "moe_all_users"}
+        ]
+      }
+    },
+    "var_p": {"sms": {"1": 100, "9": 0}},
+    "message_html": "Default SMS message.",
+    "message": "Default SMS message.",
+    "sms_dlt_template_id": "YOUR_DLT_TEMPLATE_ID_HERE",
+    "timezone": ["<tzName>", "<tzOffset>"],
+    "timezoneName": "<tzName>",
+    "bypass_dnd": false
+  }
+}</div>
+        </section>
+
+        <section class="section" id="sender-settings">
+            <h2 class="section-title">2. Sender Settings & Connector</h2>
+            <p>Default sender details are fetched from MoEngage and formatted into <span class="field-name">selectedConnector</span>.</p>
+            <h3 class="subsection-title">Fetch</h3>
+            <div class="code-block">GET {origin}/v2/settings/sms?api=1</div>
+            <h3 class="subsection-title">Format</h3>
+            <table class="mapping-table">
+                <thead>
+                    <tr><th>Field</th><th>Value Source</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><span class="field-name">selectedConnector.sender_id</span></td><td>generalSettings.default_sender_v2_id</td></tr>
+                    <tr><td><span class="field-name">selectedConnector.name</span></td><td>generalSettings.default_sender_v2</td></tr>
+                    <tr><td><span class="field-name">selectedConnector.connector_id</span></td><td>generalSettings.default_connector_v2_id</td></tr>
+                    <tr><td><span class="field-name">selectedConnector.connector_type</span></td><td>default_connector_v2 (underscores → spaces)</td></tr>
+                    <tr><td><span class="field-name">selectedConnector.senderType</span></td><td>default_sender_type (capitalized)</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="scheduling">
+            <h2 class="section-title">3. Scheduling Configuration</h2>
+            <table class="mapping-table">
+                <thead>
+                    <tr>
+                        <th>Braze Schedule Type</th>
+                        <th>MoEngage Delivery/Fields</th>
+                        <th>Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="field-name">action_based</span></td>
+                        <td>
+                            <span class="field-name">campaignType</span> = "sms"<br>
+                            <span class="field-name">delivery</span> = "trigger" or "soon"<br>
+                            <span class="field-name">triggerDelayType</span> = "delay" | "asap"<br>
+                            <span class="field-name">minDelaySmartTrig</span> = minutes<br>
+                            <span class="field-name">laterDate</span>, <span class="field-name">time</span> (if start_time)<br>
+                            <span class="field-name">stExpiryDate</span>, <span class="field-name">stExpiryTime</span>
+                        </td>
+                        <td>Delay computed from <span class="field-name">trigger_schedule_data.trigger_delay_in_seconds</span>; expiry defaults to +1 year.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">time_based</span> (recurring)</td>
+                        <td>
+                            <span class="field-name">delivery</span> = "periodic"<br>
+                            <span class="field-name">dt</span>, <span class="field-name">periodicStartDate</span>, <span class="field-name">periodicTime</span>, <span class="field-name">periodicTimezone</span><br>
+                            <span class="field-name">periodicExpireDate</span>, <span class="field-name">periodicExpireTime</span><br>
+                            <span class="field-name">schedule_info</span> with <span class="field-name">recur_type</span>, daily/weekly/monthly fields
+                        </td>
+                        <td>Weekly maps weekdays Mon–Sun → 0–6; monthly uses start date's day.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="field-name">time_based</span> (one-time)</td>
+                        <td>
+                            <span class="field-name">delivery</span> = "later"<br>
+                            <span class="field-name">dt</span>, <span class="field-name">laterDate</span>, <span class="field-name">time</span>
+                        </td>
+                        <td>ISO8601 with milliseconds + Z for <span class="field-name">dt</span>.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section" id="segmentation">
+            <h2 class="section-title">4. Segmentation</h2>
+            <p>For action-based campaigns, segmentation is overridden to a trigger condition by default:</p>
+            <div class="code-block">{
+  "included_filters": {
+    "filter_operator": "and",
+    "filters": [
+      {
+        "filter_type": "actions",
+        "action_name": "MOE_APP_OPENED",
+        "execution": {"type": "atleast", "count": 1},
+        "executed": true,
+        "attributes": {"filter_operator": "and", "filters": []}
+      }
+    ]
+  }
+}</div>
+        </section>
+
+        <section class="section" id="content">
+            <h2 class="section-title">5. Message Content & Variations</h2>
+            <ul>
+                <li>Uses first non-control <span class="field-name">messaging_actions[].message_type == "sms"</span> for single-variation campaigns.</li>
+                <li>Body is converted from Braze Liquid to MoEngage Jinja and stored in <span class="field-name">message_html</span> and <span class="field-name">message</span>.</li>
+                <li>For multiple non-control SMS variations: evenly distributes percentages across <span class="field-name">var_p.sms</span>, with remainder added to the last variation, and stores additional bodies in <span class="field-name">message_html_2</span>, <span class="field-name">message_2</span>, etc.</li>
+                <li>Control key <span class="field-name">"9"</span> is set to <span class="field-name">0</span> for multi-variation.</li>
+            </ul>
+        </section>
+
+        <section class="section" id="conversions">
+            <h2 class="section-title">6. Conversions</h2>
+            <p>Braze conversion behaviors are mapped to <span class="field-name">conversion.conversion_goals</span>. Currently supported:</p>
+            <table class="mapping-table">
+                <thead><tr><th>Braze Event</th><th>MoEngage Goal</th></tr></thead>
+                <tbody>
+                    <tr><td>TrackedUserBehavior::UsedApp</td><td>name = "App/Site Open", event_name = "App/Site Open"</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title">Document Information</h2>
+            <table class="mapping-table">
+                <thead><tr><th>Field</th><th>Value</th></tr></thead>
+                <tbody>
+                    <tr><td><strong>Document Version</strong></td><td>1.0</td></tr>
+                    <tr><td><strong>Scope</strong></td><td>Braze to MoEngage SMS Campaign Migration</td></tr>
+                    <tr><td><strong>Target Audience</strong></td><td>Developers, System Integrators, Technical Teams</td></tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+
