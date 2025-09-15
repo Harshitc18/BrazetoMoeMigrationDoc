@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Braze to MoEngage Migration API Suite Documentation</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --sidebar-bg: #111827;
+            --content-bg: #ffffff;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+            --primary-color: #007bff;
+            --border-color: #dee2e6;
+            --code-bg: #e9ecef;
+            --code-color: #343a40;
+            --method-get: #28a745;
+            --method-post: #007bff;
+            --shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: #fff;
+            position: fixed;
+            height: 100%;
+            overflow-y: auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .sidebar h1 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            border-bottom: 1px solid #495057;
+            padding-bottom: 1rem;
+        }
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar ul li a {
+            color: #adb5bd;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+            border-radius: 5px;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .sidebar ul li a:hover, .sidebar ul li a.active {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .main-content {
+            margin-left: 260px;
+            padding: 40px;
+            width: calc(100% - 260px);
+        }
+        section {
+            background: var(--content-bg);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        h2 {
+            font-size: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        h3 {
+            font-size: 1.5rem;
+            margin-top: 30px;
+        }
+        .endpoint {
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .endpoint-header {
+            padding: 15px;
+            background-color: #f8f9fa;
+            font-family: monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        .endpoint-header .method {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+            margin-right: 15px;
+        }
+        .method.get { background-color: var(--method-get); }
+        .method.post { background-color: var(--method-post); }
+        .endpoint-body {
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        th {
+            background-color: #f8f9fa;
+        }
+        code {
+            background-color: var(--code-bg);
+            color: var(--code-color);
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+        pre {
+            background-color: #212529;
+            color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: pre-wrap;
+        }
+        pre code {
+            background-color: transparent;
+            color: inherit;
+            padding: 0;
+        }
+        .required {
+            color: #dc3545;
+            font-weight: bold;
+        }
+        .note {
+            background-color: #eef2ff;
+            border-left: 4px solid #4338ca;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <h1>API Documentation</h1>
+        <nav>
+            <ul>
+                <li><a href="#introduction">Introduction</a></li>
+                <li><a href="#braze-fetcher-api">Braze Campaign Fetcher</a></li>
+                <li><a href="#email-api">Email Migration API</a></li>
+                <li><a href="#sms-api">SMS Migration API</a></li>
+                <li><a href="#push-api">Push Migration API</a></li>
+                <li><a href="#content-block-api">Content Block Migration API</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <section id="introduction">
+            <h2>Braze to MoEngage Migration API Suite</h2>
+            <p>This document provides detailed information for the suite of APIs designed to facilitate migration of campaigns and content from Braze to MoEngage.</p>
+
+            <h3>Prerequisites</h3>
+            <ul>
+                <li>All API services must be running on their designated ports.</li>
+                <li>You need a tool like <a href="https://www.postman.com/" target="_blank">Postman</a> to make API requests.</li>
+                <li>You must have valid credentials for both Braze (Session ID, App Group ID) and MoEngage (Bearer Token, Refresh Token, etc.).</li>
+            </ul>
+
+            <h3>How to Use in Postman (for POST requests)</h3>
+            <ol>
+                <li><strong>Set the Method & URL:</strong> Select <code>POST</code> as the method and enter the full request URL (e.g., <code>http://localhost:8080/v1/migrate-campaign</code>).</li>
+                <li><strong>Set Headers:</strong> Go to the "Headers" tab and add a key <code>Content-Type</code> with the value <code>application/json</code>.</li>
+                <li><strong>Set Body:</strong> Go to the "Body" tab, select the <code>raw</code> option, and choose <code>JSON</code> from the dropdown. Paste the required JSON payload into the text area.</li>
+                <li><strong>Send:</strong> Click the "Send" button to execute the request.</li>
+            </ol>
+        </section>
+
+        <section id="braze-fetcher-api">
+            <h2>Braze Campaign Fetcher API</h2>
+            <p>A service to fetch, filter, and export campaign data directly from the Braze platform.</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8082</code></p>
+            <div class="note"><strong>Authentication:</strong> All endpoints for this service require Braze credentials to be passed as custom HTTP Headers.</div>
+
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method get">GET</span> /campaigns/</div>
+                <div class="endpoint-body">
+                    <p>Fetches a summary list of all campaigns. Supports filtering via query parameters (e.g., <code>?status=active</code>).</p>
+                    <h4>Required Headers</h4>
+                    <table>
+                        <thead><tr><th>Key</th><th>Description</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>X-Dashboard-Url</code> <span class="required">*</span></td><td>Your Braze Dashboard URL (e.g., https://dashboard-09.braze.com)</td></tr>
+                            <tr><td><code>X-Session-Id</code> <span class="required">*</span></td><td>Your Braze `_session_id` cookie value.</td></tr>
+                            <tr><td><code>X-App-Group-Id</code> <span class="required">*</span></td><td>Your Braze App Group ID.</td></tr>
+                        </tbody>
+                    </table>
+                    <h4>Success Response (200 OK)</h4>
+                    <pre><code>[
+    {
+        "id": "campaign_id_123",
+        "name": "Welcome Email Campaign",
+        "type": "email",
+        "status": "draft",
+        "last_edited": "...",
+        "message_types": ["email"],
+        "variation_count": 1
+    }
+]</code></pre>
+                </div>
+            </div>
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method get">GET</span> /campaigns/{campaign_id}/</div>
+                <div class="endpoint-body">
+                    <p>Fetches the full, detailed JSON data for a single campaign by its ID.</p>
+                    <h4>Required Headers</h4>
+                    <p>Same as the <code>/campaigns/</code> endpoint.</p>
+                    <h4>Success Response (200 OK)</h4>
+                    <p>Returns the complete Braze campaign JSON object.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="email-api">
+            <h2>Email Migration API</h2>
+            <p>Migrates an email campaign from a Braze JSON export to a MoEngage draft.</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8080</code></p>
+
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-campaign</div>
+                <div class="endpoint-body">
+                    <p>Converts a Braze email campaign and creates a draft in MoEngage.</p>
+                    <h4>Request Body</h4>
+                    <p>The request body must be a JSON object with two main keys: <code>campaign</code> and <code>moengage_credentials</code>.</p>
+                    <pre><code>{
+    "campaign": {
+        "campaign_name": "My Braze Email Campaign",
+        "schedule_type": "time_based",
+        "schedule_data": {
+            "start_date_time": 1757889000
+        },
+        "messaging_actions": [
+            {
+                "message_type": "email",
+                "is_control": false,
+                "email_subject": "Hello from Braze!",
+                "email_body": "&lt;html&gt;&lt;body&gt;Email content here.&lt;/body&gt;&lt;/html&gt;",
+                "from_display_name": "My App",
+                "from_address": "test@example.com"
+            }
+        ]
+    },
+    "moengage_credentials": {
+        "bearer_token": "YOUR_MOENGAGE_BEARER_TOKEN",
+        "refresh_token": "YOUR_MOENGAGE_REFRESH_TOKEN"
+    }
+}</code></pre>
+                    <h4>Success Response (200 OK)</h4>
+                    <pre><code>{
+    "status": "success",
+    "message": "Successfully created campaign draft 'My Braze Email Campaign' in MoEngage.",
+    "moengage_response": {
+        "status": "success",
+        "campaign_id": "moengage_campaign_id_abc"
+    }
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="sms-api">
+            <h2>SMS Migration API</h2>
+            <p>Migrates an SMS campaign from a Braze JSON export to a MoEngage draft.</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8083</code></p>
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-sms-campaign</div>
+                <div class="endpoint-body">
+                    <p>Converts a Braze SMS campaign and creates a draft in MoEngage.</p>
+                    <h4>Request Body</h4>
+                     <p>The request body structure is identical to the Email API, but the <code>campaign</code> object should contain SMS-specific data.</p>
+                    <pre><code>{
+    "campaign": {
+        "campaign_name": "My Braze SMS Campaign",
+        "schedule_type": "action_based",
+        "trigger_schedule_data": {
+             "trigger_delay_in_seconds": 3600
+        },
+        "messaging_actions": [
+            {
+                "message_type": "sms",
+                "is_control": false,
+                "body": "Hello from Braze! This is an SMS."
+            }
+        ]
+    },
+    "moengage_credentials": {
+        "bearer_token": "YOUR_MOENGAGE_BEARER_TOKEN",
+        "refresh_token": "YOUR_MOENGAGE_REFRESH_TOKEN"
+    }
+}</code></pre>
+                    <h4>Success Response (200 OK)</h4>
+                    <p>The success response structure is identical to the Email API.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="push-api">
+            <h2>Push Migration API</h2>
+            <p>Migrates a Push Notification campaign from a Braze JSON export to a MoEngage draft.</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8081</code></p>
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-push-campaign</div>
+                <div class="endpoint-body">
+                    <p>Converts a Braze Push campaign (Android, iOS, Web) and creates a draft in MoEngage.</p>
+                    <h4>Request Body</h4>
+                     <p>The request body structure is identical to the Email API, but the <code>campaign</code> object should contain Push-specific data.</p>
+                    <pre><code>{
+    "campaign": {
+        "campaign_name": "My Braze Push Campaign",
+        "schedule_type": "time_based",
+        "schedule_data": { "start_date_time": 1757889000 },
+        "messaging_actions": [
+            {
+                "message_type": "androidPush",
+                "is_control": false,
+                "android_push_message": "This is the push message for Android.",
+                "android_title": "Android Title"
+            },
+            {
+                "message_type": "iosPush",
+                "is_control": false,
+                "ios_push_message": "This is the push message for iOS.",
+                "ios_alert_hash": { "title": "iOS Title" }
+            }
+        ]
+    },
+    "moengage_credentials": {
+        "bearer_token": "YOUR_MOENGAGE_BEARER_TOKEN",
+        "refresh_token": "YOUR_MOENGAGE_REFRESH_TOKEN"
+    }
+}</code></pre>
+                    <h4>Success Response (200 OK)</h4>
+                     <pre><code>{
+    "message": "Push campaign successfully converted and draft created in MoEngage!",
+    "moengage_payload": { ... },
+    "draft_created": true,
+    "moengage_response": { ... },
+    "campaign_name": "My Braze Push Campaign",
+    "platforms_detected": ["Android", "iOS"]
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <section id="content-block-api">
+            <h2>Content Block Migration API</h2>
+            <p>Fetches and migrates individual or multiple Content Blocks from Braze to MoEngage.</p>
+            <p><strong>Base URL:</strong> <code>http://localhost:8084</code></p>
+            <div class="endpoint">
+                <div class="endpoint-header"><span class="method post">POST</span> /migrate-content-block</div>
+                <div class="endpoint-body">
+                    <p>Migrates a single Braze content block to MoEngage.</p>
+                    <h4>Request Body</h4>
+                    <pre><code>{
+    "braze_credentials": {
+        "session_id": "YOUR_BRAZE_SESSION_ID",
+        "app_group_id": "YOUR_BRAZE_APP_GROUP_ID",
+        "dashboard_number": 9
+    },
+    "moengage_credentials": {
+        "app_key": "YOUR_MOENGAGE_APP_KEY",
+        "app_secret": "YOUR_MOENGAGE_APP_SECRET",
+        "created_by_email": "your.email@company.com",
+        "bearer_token": "YOUR_MOENGAGE_BEARER_TOKEN",
+        "refresh_token": "YOUR_MOENGAGE_REFRESH_TOKEN"
+    },
+    "content_block": {
+        "id": "braze_content_block_id",
+        "name": "My Reusable Footer",
+        "content": "&lt;p&gt;This is my HTML footer content.&lt;/p&gt;",
+        "description": "Standard footer for all emails."
+    }
+}</code></pre>
+                    <h4>Success Response (200 OK)</h4>
+                     <pre><code>{
+    "success": true,
+    "message": "Successfully migrated 'My Reusable Footer'",
+    "moengage_response": { ... },
+    "processed_content": "&lt;p&gt;This is my HTML footer content.&lt;/p&gt;"
+}</code></pre>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.sidebar nav a');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+
+</body>
+</html>
