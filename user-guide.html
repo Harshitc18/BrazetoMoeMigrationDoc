@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Guide - Braze to MoEngage Migration Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+    /* MoEngage Professional Documentation Theme */
+
+    :root {
+        /* Light Theme */
+        --color-bg-primary: #F9FAFB;
+        --color-bg-secondary: #FFFFFF;
+        --color-bg-nav-dark: #1D244F;
+        --color-bg-interactive: #00AFB9;
+        --color-bg-interactive-hover: #009DA6;
+
+        /* Text */
+        --color-text-primary: #111827;
+        --color-text-secondary: #6B7280;
+        --color-text-interactive: #00AFB9;
+        --color-text-on-dark: #FFFFFF;
+        --color-text-on-interactive: #FFFFFF;
+
+        /* Borders */
+        --color-border-default: #E5E7EB;
+        --color-border-interactive: #00AFB9;
+
+        /* Status */
+        --color-status-success-text: #008767;
+        --color-status-success-bg: #E6F9F4;
+        --color-status-info-text: #4A90E2;
+        --color-status-info-bg: #EBF5FF;
+        --color-status-warning-text: #F59E0B;
+        --color-status-warning-bg: #FEF3C7;
+        --color-status-danger-text: #D92D20;
+        --color-status-danger-bg: #FEE4E2;
+
+        /* Code blocks */
+        --color-code-bg: #F3F4F6;
+        --color-code-border: #E5E7EB;
+    }
+
+    [data-theme="dark"] {
+        /* Dark Theme */
+        --color-bg-primary: #0F172A;
+        --color-bg-secondary: #1E293B;
+        --color-bg-nav-dark: #0F172A;
+        --color-bg-interactive: #00AFB9;
+        --color-bg-interactive-hover: #009DA6;
+
+        /* Text */
+        --color-text-primary: #F1F5F9;
+        --color-text-secondary: #94A3B8;
+        --color-text-interactive: #00AFB9;
+        --color-text-on-dark: #FFFFFF;
+        --color-text-on-interactive: #FFFFFF;
+
+        /* Borders */
+        --color-border-default: #334155;
+        --color-border-interactive: #00AFB9;
+
+        /* Status */
+        --color-status-success-text: #10B981;
+        --color-status-success-bg: rgba(16, 185, 129, 0.1);
+        --color-status-info-text: #60A5FA;
+        --color-status-info-bg: rgba(96, 165, 250, 0.1);
+        --color-status-warning-text: #FBBF24;
+        --color-status-warning-bg: rgba(251, 191, 36, 0.1);
+        --color-status-danger-text: #F87171;
+        --color-status-danger-bg: rgba(248, 113, 113, 0.1);
+
+        /* Code blocks */
+        --color-code-bg: #0F172A;
+        --color-code-border: #334155;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    html, body { height: 100%; }
+
+    body {
+        font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+        background: var(--color-bg-primary);
+        color: var(--color-text-primary);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    a { 
+        color: var(--color-text-interactive); 
+        text-decoration: none; 
+    }
+    a:hover { 
+        color: var(--color-bg-interactive-hover); 
+    }
+
+    /* Global Header */
+    .site-header { 
+        background: var(--color-bg-nav-dark); 
+        color: var(--color-text-on-dark); 
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08); 
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    .site-header__inner { 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        padding: 1rem 2rem; 
+        display: flex; 
+        align-items: center; 
+        justify-content: space-between; 
+    }
+    .site-brand { 
+        font-weight: 600; 
+        font-size: 1rem; 
+        letter-spacing: 0.02em; 
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        padding: 0.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        color: var(--color-text-on-dark);
+    }
+    .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    .theme-toggle-icon {
+        font-size: 1.2rem;
+        transition: transform 0.2s ease;
+    }
+    .theme-toggle:hover .theme-toggle-icon {
+        transform: scale(1.1);
+    }
+
+    /* Layout */
+    .container { 
+        max-width: 1200px; 
+        margin: 0 auto; 
+        padding: 2rem; 
+    }
+    .back-link { 
+        display: inline-flex; 
+        align-items: center; 
+        gap: 0.5rem; 
+        color: var(--color-text-interactive); 
+        border: 1px solid var(--color-border-default); 
+        padding: 0.5rem 0.75rem; 
+        border-radius: 8px; 
+        background: var(--color-bg-secondary); 
+        margin-bottom: 1rem; 
+        transition: all 0.2s ease;
+    }
+    .back-link:hover {
+        background: var(--color-bg-interactive);
+        color: var(--color-text-on-interactive);
+        border-color: var(--color-bg-interactive);
+    }
+
+    /* Hero / Page Header */
+    .header { 
+        background: var(--color-bg-secondary); 
+        color: var(--color-text-primary); 
+        padding: 2rem; 
+        border-radius: 12px; 
+        border: 1px solid var(--color-border-default); 
+        text-align: center; 
+        margin-bottom: 1.5rem; 
+    }
+    .title { 
+        font-size: clamp(1.75rem, 4vw, 2.25rem); 
+        margin: 0; 
+        font-weight: 600; 
+    }
+    .subtitle { 
+        font-size: 1rem; 
+        margin-top: 0.5rem; 
+        color: var(--color-text-secondary); 
+    }
+
+    /* Step sections */
+    .step-section { 
+        background: var(--color-bg-secondary); 
+        border: 1px solid var(--color-border-default); 
+        border-radius: 12px; 
+        padding: 2rem; 
+        margin: 2rem 0; 
+    }
+    .step-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--color-border-default);
+    }
+    .step-number {
+        background: var(--color-bg-interactive);
+        color: var(--color-text-on-interactive);
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 1.2rem;
+        flex-shrink: 0;
+    }
+    .step-title { 
+        font-size: 1.5rem; 
+        margin: 0;
+        font-weight: 600; 
+    }
+
+    /* Media content */
+    .media-container {
+        margin: 1.5rem 0;
+        text-align: center;
+    }
+    .step-image {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid var(--color-border-default);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin: 1rem 0;
+    }
+    .step-video {
+        width: 100%;
+        max-width: 800px;
+        height: auto;
+        border-radius: 8px;
+        border: 1px solid var(--color-border-default);
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        margin: 1rem 0;
+    }
+
+    /* Content styling */
+    .step-content {
+        line-height: 1.7;
+    }
+    .step-content p {
+        margin: 1rem 0;
+    }
+    .step-content ul, .step-content ol {
+        margin: 1rem 0;
+        padding-left: 2rem;
+    }
+    .step-content li {
+        margin: 0.5rem 0;
+    }
+
+    /* Info boxes */
+    .info-box, .warning-box, .success-box { 
+        border-radius: 10px; 
+        padding: 1rem; 
+        margin: 1rem 0; 
+        border: 1px solid var(--color-border-default); 
+    }
+    .info-box { 
+        background: var(--color-status-info-bg); 
+        color: var(--color-status-info-text); 
+        border-color: var(--color-status-info-text);
+    }
+    .warning-box { 
+        background: var(--color-status-warning-bg); 
+        color: var(--color-status-warning-text); 
+        border-color: var(--color-status-warning-text);
+    }
+    .success-box { 
+        background: var(--color-status-success-bg); 
+        color: var(--color-status-success-text); 
+        border-color: var(--color-status-success-text);
+    }
+    .info-title, .warning-title, .success-title { 
+        font-weight: 600; 
+        margin-bottom: 0.5rem; 
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    /* Navigation at bottom */
+    .guide-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3rem;
+        padding: 1rem;
+        background: var(--color-bg-secondary);
+        border-radius: 8px;
+        border: 1px solid var(--color-border-default);
+    }
+    
+    .nav-button {
+        background: var(--color-bg-interactive);
+        color: var(--color-text-on-interactive);
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.2s ease;
+        border: none;
+        cursor: pointer;
+    }
+    .nav-button:hover {
+        background: var(--color-bg-interactive-hover);
+        color: var(--color-text-on-interactive);
+        transform: translateY(-1px);
+    }
+    .nav-button:disabled {
+        background: #D1D5DB;
+        color: #6B7280;
+        cursor: not-allowed;
+        transform: none;
+    }
+
+    /* Table of contents */
+    .toc { 
+        background: var(--color-bg-secondary); 
+        padding: 1.25rem; 
+        border-radius: 12px; 
+        border: 1px solid var(--color-border-default); 
+        margin-bottom: 1.5rem; 
+    }
+    .toc-title { 
+        font-size: 1.25rem; 
+        margin-bottom: 0.75rem; 
+        font-weight: 600;
+    }
+    .toc ul { 
+        list-style: none; 
+    }
+    .toc li { 
+        margin: 0.5rem 0; 
+    }
+    .toc a { 
+        color: var(--color-text-secondary); 
+        display: block;
+        padding: 0.25rem 0;
+        transition: color 0.2s ease;
+    }
+    .toc a:hover { 
+        color: var(--color-text-interactive); 
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .container { 
+            padding: 1rem; 
+        }
+        .site-header__inner { 
+            padding: 0.75rem 1rem; 
+        }
+        .step-header {
+            flex-direction: column;
+            text-align: center;
+            gap: 0.5rem;
+        }
+        .guide-navigation {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        .toc {
+            position: static;
+        }
+    }
+
+    /* Code styling */
+    .code-snippet {
+        background: var(--color-code-bg);
+        border: 1px solid var(--color-code-border);
+        border-radius: 6px;
+        padding: 0.75rem;
+        font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        font-size: 0.875rem;
+        margin: 1rem 0;
+        overflow-x: auto;
+        color: var(--color-text-primary);
+    }
+
+    /* Highlight important text */
+    .highlight {
+        background: #FEF3C7;
+        color: #92400E;
+        padding: 0.125rem 0.25rem;
+        border-radius: 3px;
+        font-weight: 500;
+    }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="site-header__inner">
+            <div class="site-brand">MoEngage Migration Tool - User Guide</div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-toggle-icon">🌙</span>
+            </button>
+        </div>
+    </header>
+
+    <main class="container">
+        <a href="index.html" class="back-link">
+            ← Back to Documentation
+        </a>
+
+        <section class="header">
+            <h1 class="title">Complete User Guide</h1>
+            <p class="subtitle">Step-by-step walkthrough for migrating from Braze to MoEngage</p>
+        </section>
+
+        <section class="toc">
+            <h2 class="toc-title">Table of Contents</h2>
+            <ul>
+                <li><a href="#step1">Step 1: Application Login & Admin Authentication</a></li>
+                <li><a href="#step2">Step 2: Platform Selection (Braze/Salesforce)</a></li>
+                <li><a href="#step3">Step 3: Migration Type Selection</a></li>
+                <li><a href="#step4">Step 4: Braze Authentication</a></li>
+                <li><a href="#step5">Step 5: MoEngage Credentials Setup</a></li>
+                <li><a href="#step6">Step 6: Migration Process</a></li>
+            </ul>
+        </section>
+
+        <!-- Step 1: Application Login -->
+        <section id="step1" class="step-section">
+            <div class="step-header">
+                <div class="step-number">1</div>
+                <h2 class="step-title">Application Login & Admin Authentication</h2>
+            </div>
+            <div class="step-content">
+                <p>Welcome to the Braze to MoEngage Migration Tool! Let's begin with accessing the application and authenticating as an admin user.</p>
+                
+                <div class="media-container">
+                    <img src="assets/opening_screen.png" alt="Migration Tool Opening Screen" class="step-image">
+                </div>
+
+                <h3>What you'll see:</h3>
+                <ul>
+                    <li>The application's main landing page with the migration tool interface</li>
+                    <li>A clean, professional interface designed for easy navigation</li>
+                    <li>Password input field for secure access</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">Important</div>
+                    <p>You'll need a <strong>password</strong> to access the migration tool. Contact your system administrator to obtain the access password before proceeding.</p>
+                </div>
+
+                <h3>Authentication Steps:</h3>
+                <ol>
+                    <li>Contact your <span class="highlight">system administrator</span> to request the application access password</li>
+                    <li>Open the migration tool application in your web browser</li>
+                    <li>You'll be prompted to enter the password</li>
+                    <li>Enter the <span class="highlight">password provided by your admin</span></li>
+                    <li>Click "Enter" or "Login" to proceed to the main dashboard</li>
+                </ol>
+
+                <div class="success-box">
+                    <div class="success-title">Next Step</div>
+                    <p>Once the password is validated and you're authenticated, you'll be redirected to the platform selection interface.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 2: Platform Selection -->
+        <section id="step2" class="step-section">
+            <div class="step-header">
+                <div class="step-number">2</div>
+                <h2 class="step-title">Platform Selection (Braze/Salesforce)</h2>
+            </div>
+            <div class="step-content">
+                <p>After successful authentication, you'll see the platform selection interface where you can choose which platform you want to migrate from. Currently, the tool focuses on Braze migration.</p>
+                
+                <div class="media-container">
+                    <img src="assets/Platform_selection.png" alt="Platform Selection Interface" class="step-image">
+                </div>
+
+                <h3>Available Migration Platforms:</h3>
+                <ul>
+                    <li><strong>Braze:</strong> Fully supported - Complete migration capabilities for campaigns, content blocks, and flows</li>
+                    <li><strong>Salesforce Marketing Cloud:</strong> Coming soon - Currently disabled/under development</li>
+                </ul>
+
+                <div class="info-box">
+                    <div class="info-title">Current Status</div>
+                    <p>We are currently focusing on <strong>Braze to MoEngage</strong> migration. Salesforce integration is planned for future releases but is currently disabled.</p>
+                </div>
+
+                <h3>Platform Selection Process:</h3>
+                <ol>
+                    <li><strong>Review Platform Options:</strong> You'll see cards for available migration platforms</li>
+                    <li><strong>Select Braze:</strong> Click on the Braze card (highlighted with a blue border when available)</li>
+                    <li><strong>Note Salesforce Status:</strong> Salesforce will appear grayed out with "Disabled" status</li>
+                    <li><strong>Proceed to Migration Type:</strong> After selecting Braze, you'll see migration type options</li>
+                </ol>
+
+                <h3>Migration Type Selection:</h3>
+                <p>Once you select Braze as your platform, you'll see three migration type options:</p>
+                <ul>
+                    <li><strong>Campaigns:</strong> Migrate your email, push, and SMS campaigns</li>
+                    <li><strong>Content Blocks:</strong> Migrate reusable content blocks and templates</li>
+                    <li><strong>Flows:</strong> Currently disabled - Workflow automation migration (coming soon)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <div class="warning-title">Important</div>
+                    <p>Make sure you have the necessary permissions in your Braze account to access campaigns and content blocks for the migration types you select.</p>
+                </div>
+
+                <div class="success-box">
+                    <div class="success-title">Ready to Proceed</div>
+                    <p>Select "Braze" as your platform and choose your migration type (Campaigns or Content Blocks) to continue to the authentication step.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 3: Migration Type Selection -->
+        <section id="step3" class="step-section">
+            <div class="step-header">
+                <div class="step-number">3</div>
+                <h2 class="step-title">Migration Type Selection</h2>
+            </div>
+            <div class="step-content">
+                <p>After selecting Braze as your platform, you need to choose what type of content you want to migrate from Braze to MoEngage.</p>
+                
+                <h3>Available Migration Types:</h3>
+                <ul>
+                    <li><strong>Campaigns:</strong> Fully supported
+                        <ul>
+                            <li>Email campaigns with templates and content</li>
+                            <li>Push notifications for iOS, Android, and Web</li>
+                            <li>SMS campaigns and messaging</li>
+                            <li>User segmentation and targeting rules</li>
+                            <li>Scheduling and automation settings</li>
+                        </ul>
+                    </li>
+                    <li><strong>Content Blocks:</strong> Fully supported
+                        <ul>
+                            <li>Reusable email templates and headers</li>
+                            <li>Rich media content and images</li>
+                            <li>Dynamic content and personalization blocks</li>
+                            <li>Footer templates and legal disclaimers</li>
+                        </ul>
+                    </li>
+                    <li><strong>🔄 Flows:</strong> � Coming soon - Currently disabled
+                        <ul>
+                            <li>Workflow automation and trigger campaigns</li>
+                            <li>User journey mapping and sequences</li>
+                            <li>Advanced behavioral targeting rules</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="info-box">
+                    <div class="info-title">Pro Tip</div>
+                    <p>You can run separate migrations for Campaigns and Content Blocks. It's often recommended to migrate Content Blocks first, then Campaigns that depend on those blocks.</p>
+                </div>
+
+                <h3>What Gets Migrated:</h3>
+                <div class="info-box">
+                    <div class="info-title">Campaign Migration Includes:</div>
+                    <ul>
+                        <li><strong>Email Campaigns:</strong> Subject lines, content, sender info, scheduling, A/B tests</li>
+                        <li><strong>Push Notifications:</strong> Titles, messages, images, action buttons, deep links</li>
+                        <li><strong>SMS Campaigns:</strong> Message content, sender information, delivery timing</li>
+                        <li><strong>Segmentation:</strong> Audience definitions, filters, and targeting criteria</li>
+                        <li><strong>Analytics Setup:</strong> Conversion tracking and performance metrics configuration</li>
+                    </ul>
+                </div>
+
+                <h3>Content Block Migration Details:</h3>
+                <p>When migrating Content Blocks, the tool handles various types of reusable content components:</p>
+                <div class="info-box">
+                    <div class="info-title">Content Block Types Supported:</div>
+                    <ul>
+                        <li><strong>HTML Content Blocks:</strong> Rich HTML templates with styling and formatting</li>
+                        <li><strong>Text Content Blocks:</strong> Plain text snippets and reusable copy</li>
+                        <li><strong>Image Content Blocks:</strong> Image assets with alt text and responsive settings</li>
+                        <li><strong>Dynamic Content Blocks:</strong> Personalized content with liquid templating</li>
+                        <li><strong>Conditional Logic Blocks:</strong> Content that changes based on user attributes</li>
+                        <li><strong>Footer Templates:</strong> Email footers with unsubscribe links and legal text</li>
+                        <li><strong>Header Templates:</strong> Branded headers with logos and navigation</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">Migration Notes</div>
+                    <ul>
+                        <li>Content blocks are migrated first to ensure campaigns that reference them work correctly</li>
+                        <li>Liquid templating syntax is automatically converted to MoEngage's personalization format</li>
+                        <li>Image assets are transferred and hosted on MoEngage's CDN</li>
+                        <li>Any custom CSS or styling is preserved during migration</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <div class="success-title">Ready to Proceed</div>
+                    <p>Select your desired migration type (Campaigns or Content Blocks) and click "Continue" to proceed to the Braze authentication step.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 4: Braze Authentication -->
+        <section id="step4" class="step-section">
+            <div class="step-header">
+                <div class="step-number">4</div>
+                <h2 class="step-title">Braze Authentication & API Setup</h2>
+            </div>
+            <div class="step-content">
+                <p>Now you'll need to authenticate with your Braze account to allow the migration tool to access your campaigns and data.</p>
+                
+                <div class="media-container">
+                    <img src="assets/Braze_login.png" alt="Braze Login Configuration" class="step-image">
+                </div>
+
+                <div class="media-container">
+                    <video controls class="step-video">
+                        <source src="assets/breaze_cred_guide.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p><em>Watch the complete guide for setting up Braze credentials</em></p>
+                </div>
+
+                <h3>Required Braze Credentials:</h3>
+                <ol>
+                    <li><strong>API Key:</strong> Your Braze REST API key with appropriate permissions</li>
+                    <li><strong>App Identifier:</strong> The unique identifier for your Braze app</li>
+                    <li><strong>Instance URL:</strong> Your Braze instance endpoint (e.g., dashboard-01.braze.com)</li>
+                    <li><strong>Workspace ID:</strong> The ID of the Braze workspace you're migrating from</li>
+                </ol>
+
+                <h3>Step-by-Step Authentication:</h3>
+                <ol>
+                    <li><strong>Access Braze Dashboard:</strong>
+                        <ul>
+                            <li>Log into your Braze account</li>
+                            <li>Navigate to Settings → API Keys</li>
+                        </ul>
+                    </li>
+                    <li><strong>Create or Select API Key:</strong>
+                        <ul>
+                            <li>Create a new API key or use an existing one</li>
+                            <li>Ensure it has the following permissions:
+                                <div class="code-snippet">• campaigns.list
+• campaigns.details
+• content_blocks.list
+• content_blocks.details
+• segments.list
+• segments.details
+• users.export.ids</div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li><strong>Copy Required Information:</strong>
+                        <ul>
+                            <li>Copy your API key</li>
+                            <li>Note your instance URL</li>
+                            <li>Get your App Identifier from Settings → App Settings</li>
+                        </ul>
+                    </li>
+                    <li><strong>Enter Credentials in Migration Tool:</strong>
+                        <ul>
+                            <li>Paste the API key in the designated field</li>
+                            <li>Enter your instance URL</li>
+                            <li>Input your App Identifier and Workspace ID</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="warning-box">
+                    <div class="warning-title">Security Note</div>
+                    <p>Keep your API credentials secure and never share them publicly. The migration tool uses secure connections and doesn't store your credentials permanently.</p>
+                </div>
+
+                <div class="info-box">
+                    <div class="info-title">Troubleshooting</div>
+                    <p>If authentication fails, verify that:</p>
+                    <ul>
+                        <li>Your API key has the correct permissions</li>
+                        <li>The instance URL is correct and accessible</li>
+                        <li>Your Braze account is active and in good standing</li>
+                        <li>There are no IP restrictions blocking the migration tool</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 5: MoEngage Credentials Setup -->
+        <section id="step5" class="step-section">
+            <div class="step-header">
+                <div class="step-number">5</div>
+                <h2 class="step-title">MoEngage Credentials Setup & Authentication</h2>
+            </div>
+            <div class="step-content">
+                <p>The final authentication step involves setting up your MoEngage account credentials to enable the migration tool to create campaigns in your MoEngage workspace.</p>
+                
+                <div class="media-container">
+                    <img src="assets/moengage_auth.png" alt="MoEngage Authentication Interface" class="step-image">
+                </div>
+
+                <div class="media-container">
+                    <video controls class="step-video">
+                        <source src="assets/moengae_cred_guide.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <p><em>Complete video guide for MoEngage credentials setup</em></p>
+                </div>
+
+                <h3>Required MoEngage Credentials:</h3>
+                <p>MoEngage uses Basic Authentication for API requests. You'll need to gather the following credentials from your MoEngage dashboard:</p>
+                <ol>
+                    <li><strong>Workspace ID (Username):</strong> Your MoEngage workspace identifier (formerly App ID)</li>
+                    <li><strong>API Key (Password):</strong> Your MoEngage API key for authentication</li>
+                    <li><strong>Data Center:</strong> Your MoEngage data center region (US, EU, etc.)</li>
+                </ol>
+
+                <div class="info-box">
+                    <div class="info-title">Authentication Method</div>
+                    <p>MoEngage APIs use Basic Authentication with Base64 encoding. The migration tool will automatically create the required authorization header in this format:</p>
+                    <div class="code-snippet">{"Authorization":"Basic Base64_ENCODED_WORKSPACEID_APIKEY=="}</div>
+                    <p>The API request will be authenticated through Basic Authentication. Basic Authentication sends a Base64-encoded string containing your username and password with every API request. It encodes a 'username:password' string in Base64 and appends the encoded string with 'Basic '.</p>
+                </div>
+
+                <div class="media-container">
+                    <img src="assets/workspaceAPI.png" alt="MoEngage Workspace API Settings" class="step-image">
+                    <p><em>MoEngage Workspace API configuration interface</em></p>
+                </div>
+
+                <h3>How to Get Your MoEngage Credentials:</h3>
+                <p>Follow these detailed steps to obtain your MoEngage credentials from the MoEngage dashboard:</p>
+
+                <h4>Step 1: Access MoEngage API Settings</h4>
+                <ol>
+                    <li>Log in to your MoEngage dashboard</li>
+                    <li>On the left navigation menu, go to <strong>Settings</strong> > <strong>Account</strong> > <strong>APIs</strong></li>
+                </ol>
+
+                <h4>Step 2: Copy Workspace ID (Username)</h4>
+                <ol>
+                    <li>In the APIs section, locate the <strong>Workspace ID</strong> (earlier called App ID)</li>
+                    <li>Click the <strong>copy icon</strong> next to the Workspace ID to copy the username</li>
+                    <li>This will serve as your <strong>username</strong> for Basic Authentication</li>
+                </ol>
+
+                <h4>Step 3: Copy API Key (Password)</h4>
+                <ol>
+                    <li>In the <strong>API keys section</strong>, find the <strong>Push templates tile</strong></li>
+                    <li>Click the <strong>copy icon</strong> in the Push templates tile to copy the API key</li>
+                    <li>This will serve as your <strong>password</strong> for Basic Authentication</li>
+                </ol>
+
+                <div class="media-container">
+                    <img src="assets/Content_block_moe_login.png" alt="MoEngage Content Block Credentials Fields" class="step-image">
+                    <p><em>All required fields for MoEngage content block migration setup</em></p>
+                </div>
+
+                <h4>Step 4: Identify Your Data Center</h4>
+                <ol>
+                    <li>Check your MoEngage dashboard URL to identify your data center:</li>
+                    <ul>
+                        <li><strong>US:</strong> dashboard.moengage.com</li>
+                        <li><strong>EU:</strong> dashboard-eu.moengage.com</li>
+                        <li><strong>APAC:</strong> dashboard-apac.moengage.com</li>
+                    </ul>
+                </ol>
+
+                <div class="warning-box">
+                    <div class="warning-title">Important Security Notes</div>
+                    <ul>
+                        <li>Keep your API credentials secure and never share them publicly</li>
+                        <li>The API key provides access to your MoEngage workspace, treat it like a password</li>
+                        <li>Use these exact details to authenticate API requests</li>
+                        <li>Ensure your API key has campaign creation and content block management permissions</li>
+                    </ul>
+                </div>
+
+                <h3>Enter Credentials in Migration Tool:</h3>
+                <ol>
+                    <li><strong>Workspace ID:</strong> Paste the Workspace ID you copied from Settings > Account > APIs</li>
+                    <li><strong>API Key:</strong> Enter the API Key from the Push templates tile</li>
+                    <li><strong>Data Center:</strong> Select your data center region based on your dashboard URL</li>
+                    <li><strong>Test Connection:</strong> Click "Test Connection" to verify the credentials</li>
+                    <li><strong>Save Configuration:</strong> Once verified, click "Save Credentials"</li>
+                </ol>
+
+                <div class="info-box">
+                    <div class="info-title">Content Block Migration Setup</div>
+                    <p>For content block migrations, ensure you have the following additional permissions:</p>
+                    <ul>
+                        <li>Content block creation and management</li>
+                        <li>Template upload and modification rights</li>
+                        <li>Asset management for images and media</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <div class="success-title">Connection Verified</div>
+                    <p>When you see the "Connection Successful" message, your MoEngage credentials are properly configured and you're ready to begin the migration process.</p>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">Important Notes</div>
+                    <ul>
+                        <li>Double-check your data center selection to avoid connection issues</li>
+                        <li>Ensure your MoEngage account has sufficient quota for the campaigns you're migrating</li>
+                        <li>Keep your API credentials secure and rotate them periodically</li>
+                        <li>For content block migrations, verify that your workspace has content block creation permissions enabled</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Step 6: Migration Process -->
+        <section id="step6" class="step-section">
+            <div class="step-header">
+                <div class="step-number">6</div>
+                <h2 class="step-title">Migration Process & Completion</h2>
+            </div>
+            <div class="step-content">
+                <p>Now that both Braze and MoEngage credentials are configured, you can begin the actual migration process. The tool will automatically handle the transfer of your selected campaigns and content.</p>
+                
+                <h3>Migration Process Overview:</h3>
+                <ol>
+                    <li><strong>Pre-Migration Validation:</strong>
+                        <ul>
+                            <li>The tool validates all selected campaigns</li>
+                            <li>Checks for compatibility issues</li>
+                            <li>Identifies any missing content or dependencies</li>
+                        </ul>
+                    </li>
+                    <li><strong>Content Block Migration:</strong>
+                        <ul>
+                            <li>Migrates reusable content blocks first</li>
+                            <li>Preserves formatting and dynamic content</li>
+                            <li>Maps personalization variables to MoEngage format</li>
+                        </ul>
+                    </li>
+                    <li><strong>Campaign Migration:</strong>
+                        <ul>
+                            <li>Transfers campaign configurations</li>
+                            <li>Preserves scheduling and segmentation rules</li>
+                            <li>Converts trigger conditions and automation logic</li>
+                        </ul>
+                    </li>
+                    <li><strong>Testing & Validation:</strong>
+                        <ul>
+                            <li>Runs automated tests on migrated campaigns</li>
+                            <li>Validates content rendering</li>
+                            <li>Checks personalization accuracy</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <h3>Migration Steps:</h3>
+                <ol>
+                    <li><strong>Review Selection:</strong>
+                        <ul>
+                            <li>Confirm the campaigns and content blocks selected for migration</li>
+                            <li>Review any warnings or compatibility notes</li>
+                        </ul>
+                    </li>
+                    <li><strong>Start Migration:</strong>
+                        <ul>
+                            <li>Click "Begin Migration" to start the process</li>
+                            <li>Monitor the progress bar and status updates</li>
+                        </ul>
+                    </li>
+                    <li><strong>Monitor Progress:</strong>
+                        <ul>
+                            <li>Track the migration status in real-time</li>
+                            <li>View detailed logs for each campaign</li>
+                            <li>Address any errors or warnings as they appear</li>
+                        </ul>
+                    </li>
+                    <li><strong>Review Results:</strong>
+                        <ul>
+                            <li>Check the migration summary report</li>
+                            <li>Verify that all campaigns were migrated successfully</li>
+                            <li>Note any manual adjustments needed</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="info-box">
+                    <div class="info-title">What Gets Migrated</div>
+                    <ul>
+                        <li><strong>Email Campaigns:</strong> Subject lines, content, sender info, scheduling</li>
+                        <li><strong>Push Notifications:</strong> Titles, messages, images, action buttons</li>
+                        <li><strong>SMS Campaigns:</strong> Message content, sender information, timing</li>
+                        <li><strong>Segmentation:</strong> Audience definitions and targeting criteria</li>
+                        <li><strong>Automation:</strong> Trigger conditions and workflow logic</li>
+                    </ul>
+                </div>
+
+                <h3>Post-Migration Checklist:</h3>
+                <ol>
+                    <li><strong>Campaign Review:</strong>
+                        <ul>
+                            <li>Log into your MoEngage dashboard</li>
+                            <li>Review each migrated campaign</li>
+                            <li>Test email rendering and personalization</li>
+                        </ul>
+                    </li>
+                    <li><strong>Segmentation Verification:</strong>
+                        <ul>
+                            <li>Verify that audience segments were created correctly</li>
+                            <li>Check segment criteria and size estimates</li>
+                        </ul>
+                    </li>
+                    <li><strong>Content Validation:</strong>
+                        <ul>
+                            <li>Test all dynamic content and personalization</li>
+                            <li>Preview campaigns across different devices</li>
+                            <li>Verify link tracking and UTM parameters</li>
+                        </ul>
+                    </li>
+                    <li><strong>Schedule Setup:</strong>
+                        <ul>
+                            <li>Review and adjust campaign schedules as needed</li>
+                            <li>Set up any additional automation workflows</li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <div class="success-box">
+                    <div class="success-title">Migration Complete!</div>
+                    <p>Congratulations! Your campaigns have been successfully migrated from Braze to MoEngage. You can now manage and optimize your campaigns in the MoEngage platform.</p>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">Next Steps</div>
+                    <ul>
+                        <li>Conduct thorough testing before activating migrated campaigns</li>
+                        <li>Update any hardcoded links or references to Braze</li>
+                        <li>Train your team on MoEngage's interface and features</li>
+                        <li>Set up monitoring and analytics to track campaign performance</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <section class="guide-navigation">
+            <a href="index.html" class="nav-button">← Back to Documentation</a>
+            <a href="api_doc.html" class="nav-button">View API Documentation →</a>
+        </section>
+    </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.querySelector('.theme-toggle-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        updateThemeIcon(currentTheme);
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    </script>
+</body>
+</html>

@@ -7,10 +7,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
     :root {
+        /* Light Theme */
         --color-bg-primary:#F9FAFB; --color-bg-secondary:#FFFFFF; --color-bg-nav-dark:#1D244F; --color-bg-interactive:#00AFB9; --color-bg-interactive-hover:#009DA6;
         --color-text-primary:#111827; --color-text-secondary:#6B7280; --color-text-interactive:#00AFB9; --color-text-on-dark:#FFFFFF; --color-text-on-interactive:#FFFFFF;
         --color-border-default:#E5E7EB; --color-border-interactive:#00AFB9;
         --color-status-success-text:#008767; --color-status-success-bg:#E6F9F4; --color-status-info-text:#4A90E2; --color-status-info-bg:#EBF5FF; --color-status-danger-text:#D92D20; --color-status-danger-bg:#FEE4E2;
+    }
+    [data-theme="dark"] {
+        /* Dark Theme */
+        --color-bg-primary:#0F172A; --color-bg-secondary:#1E293B; --color-bg-nav-dark:#0F172A; --color-bg-interactive:#00AFB9; --color-bg-interactive-hover:#009DA6;
+        --color-text-primary:#F1F5F9; --color-text-secondary:#94A3B8; --color-text-interactive:#00AFB9; --color-text-on-dark:#FFFFFF; --color-text-on-interactive:#FFFFFF;
+        --color-border-default:#334155; --color-border-interactive:#00AFB9;
+        --color-status-success-text:#10B981; --color-status-success-bg:rgba(16,185,129,0.1); --color-status-info-text:#60A5FA; --color-status-info-bg:rgba(96,165,250,0.1); --color-status-danger-text:#F87171; --color-status-danger-bg:rgba(248,113,113,0.1);
     }
     *{box-sizing:border-box;margin:0;padding:0}
     html,body{height:100%}
@@ -29,15 +37,15 @@
     .section{background:var(--color-bg-secondary);border:1px solid var(--color-border-default);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
     .section-title{font-size:1.25rem;margin-bottom:1rem}.subsection-title{font-size:1rem;color:var(--color-text-secondary);margin:1rem 0 .5rem 0}
     .mapping-table{width:100%;border-collapse:collapse;margin-top:.75rem;font-size:.95rem}
-    .mapping-table th{background:#F3F4F6;text-align:left;padding:.75rem;border-bottom:1px solid var(--color-border-default)}
+    .mapping-table th{background:var(--color-bg-primary);text-align:left;padding:.75rem;border-bottom:1px solid var(--color-border-default)}
     .mapping-table td{padding:.75rem;border-bottom:1px solid var(--color-border-default);vertical-align:top}
-    .field-name{font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;padding:.1rem .35rem;border-radius:6px;color:var(--color-text-interactive);background:#F0FDFF;border:1px solid #D1FAFE}
+    .field-name{font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;padding:.1rem .35rem;border-radius:6px;color:var(--color-text-interactive);background:var(--color-status-info-bg);border:1px solid var(--color-border-interactive)}
     .info-box,.warning-box,.success-box{border-radius:10px;padding:1rem;margin:1rem 0;border:1px solid var(--color-border-default)}
     .info-box{background:var(--color-status-info-bg);color:var(--color-status-info-text)}
     .warning-box{background:var(--color-status-danger-bg);color:var(--color-status-danger-text)}
     .success-box{background:var(--color-status-success-bg);color:var(--color-status-success-text)}
     .info-title,.warning-title{font-weight:600;margin-bottom:.5rem}
-    .code-block{background:#F3F4F6;border:1px solid var(--color-border-default);border-radius:8px;padding:1rem;font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;white-space:pre-wrap;overflow-x:auto}
+    .code-block{background:var(--color-bg-secondary);border:1px solid var(--color-border-default);border-radius:8px;padding:1rem;font-family:'Courier New',ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;font-size:.9rem;white-space:pre-wrap;overflow-x:auto;color:var(--color-text-primary)}
     ul{padding-left:1.25rem}li{margin:.25rem 0}
     @media (max-width:640px){.container{padding:1rem}.site-header__inner{padding:.75rem 1rem}}
     </style>
@@ -46,6 +54,9 @@
     <header class="site-header">
         <div class="site-header__inner">
             <div class="site-brand">MoEngage Official Documentation</div>
+            <button id="theme-toggle" style="background:none;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:0.5rem;cursor:pointer;color:var(--color-text-on-dark);font-size:1.2rem;" aria-label="Toggle dark mode">
+                <span class="theme-toggle-icon">🌙</span>
+            </button>
         </div>
     </header>
 
@@ -462,6 +473,32 @@
             if (cd) cd.textContent = d;
             if (fd) fd.textContent = d;
         })();
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.querySelector('.theme-toggle-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        updateThemeIcon(currentTheme);
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
     </script>
 </body>
 </html>

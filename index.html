@@ -9,23 +9,23 @@
     /* MoEngage Professional Documentation Theme (inlined) */
 
     :root {
-        /* Backgrounds */
-        --color-bg-primary: #F9FAFB; /* Default page background */
-        --color-bg-secondary: #FFFFFF; /* Cards, tables, modals */
-        --color-bg-nav-dark: #1D244F; /* Primary navigation */
-        --color-bg-interactive: #00AFB9; /* Primary buttons/links */
-        --color-bg-interactive-hover: #009DA6; /* Hover state */
+        /* Light Theme */
+        --color-bg-primary: #F9FAFB;
+        --color-bg-secondary: #FFFFFF;
+        --color-bg-nav-dark: #1D244F;
+        --color-bg-interactive: #00AFB9;
+        --color-bg-interactive-hover: #009DA6;
 
         /* Text */
-        --color-text-primary: #111827; /* Headings & body text */
-        --color-text-secondary: #6B7280; /* Labels & helper text */
-        --color-text-interactive: #00AFB9; /* Links */
-        --color-text-on-dark: #FFFFFF; /* Text on dark backgrounds */
-        --color-text-on-interactive: #FFFFFF; /* Text on interactive */
+        --color-text-primary: #111827;
+        --color-text-secondary: #6B7280;
+        --color-text-interactive: #00AFB9;
+        --color-text-on-dark: #FFFFFF;
+        --color-text-on-interactive: #FFFFFF;
 
         /* Borders */
-        --color-border-default: #E5E7EB; /* Dividers & outlines */
-        --color-border-interactive: #00AFB9; /* Focused/selected borders */
+        --color-border-default: #E5E7EB;
+        --color-border-interactive: #00AFB9;
 
         /* Status */
         --color-status-success-text: #008767;
@@ -34,6 +34,34 @@
         --color-status-info-bg: #EBF5FF;
         --color-status-danger-text: #D92D20;
         --color-status-danger-bg: #FEE4E2;
+    }
+
+    [data-theme="dark"] {
+        /* Dark Theme */
+        --color-bg-primary: #0F172A;
+        --color-bg-secondary: #1E293B;
+        --color-bg-nav-dark: #0F172A;
+        --color-bg-interactive: #00AFB9;
+        --color-bg-interactive-hover: #009DA6;
+
+        /* Text */
+        --color-text-primary: #F1F5F9;
+        --color-text-secondary: #94A3B8;
+        --color-text-interactive: #00AFB9;
+        --color-text-on-dark: #FFFFFF;
+        --color-text-on-interactive: #FFFFFF;
+
+        /* Borders */
+        --color-border-default: #334155;
+        --color-border-interactive: #00AFB9;
+
+        /* Status */
+        --color-status-success-text: #10B981;
+        --color-status-success-bg: rgba(16, 185, 129, 0.1);
+        --color-status-info-text: #60A5FA;
+        --color-status-info-bg: rgba(96, 165, 250, 0.1);
+        --color-status-danger-text: #F87171;
+        --color-status-danger-bg: rgba(248, 113, 113, 0.1);
     }
 
     * {
@@ -61,6 +89,31 @@
     .site-header__inner { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
     .site-brand { font-weight: 600; font-size: 1rem; letter-spacing: 0.02em; }
 
+    /* Theme Toggle */
+    .theme-toggle {
+        background: none;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 6px;
+        padding: 0.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        color: var(--color-text-on-dark);
+    }
+    .theme-toggle:hover {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.3);
+    }
+    .theme-toggle-icon {
+        font-size: 1.2rem;
+        transition: transform 0.2s ease;
+    }
+    .theme-toggle:hover .theme-toggle-icon {
+        transform: scale(1.1);
+    }
+
     /* Layout */
     .container { max-width: 1200px; margin: 0 auto; padding: 2rem; }
     .back-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--color-text-interactive); border: 1px solid var(--color-border-default); padding: 0.5rem 0.75rem; border-radius: 8px; background: var(--color-bg-secondary); margin-bottom: 1rem; }
@@ -84,9 +137,9 @@
 
     /* Tables */
     .mapping-table { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.95rem; }
-    .mapping-table th { background: #F3F4F6; text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--color-border-default); }
+    .mapping-table th { background: var(--color-bg-primary); text-align: left; padding: 0.75rem; border-bottom: 1px solid var(--color-border-default); }
     .mapping-table td { padding: 0.75rem; border-bottom: 1px solid var(--color-border-default); vertical-align: top; }
-    .field-name { font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.9rem; padding: 0.1rem 0.35rem; border-radius: 6px; color: var(--color-text-interactive); background: #F0FDFF; border: 1px solid #D1FAFE; }
+    .field-name { font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.9rem; padding: 0.1rem 0.35rem; border-radius: 6px; color: var(--color-text-interactive); background: var(--color-status-info-bg); border: 1px solid var(--color-border-interactive); }
 
     /* Info blocks */
     .info-box, .warning-box, .success-box { border-radius: 10px; padding: 1rem; margin: 1rem 0; border: 1px solid var(--color-border-default); }
@@ -96,7 +149,7 @@
     .info-title, .warning-title { font-weight: 600; margin-bottom: 0.5rem; }
 
     /* Code block */
-    .code-block { background: #F3F4F6; border: 1px solid var(--color-border-default); border-radius: 8px; padding: 1rem; font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.9rem; white-space: pre-wrap; overflow-x: auto; }
+    .code-block { background: var(--color-bg-secondary); border: 1px solid var(--color-border-default); border-radius: 8px; padding: 1rem; font-family: 'Courier New', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 0.9rem; white-space: pre-wrap; overflow-x: auto; color: var(--color-text-primary); }
 
     /* Home navigation cards */
     .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
@@ -119,6 +172,9 @@
     <header class="site-header">
         <div class="site-header__inner">
             <div class="site-brand">MoEngage Official Documentation</div>
+            <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode">
+                <span class="theme-toggle-icon">🌙</span>
+            </button>
         </div>
     </header>
 
@@ -136,6 +192,10 @@
         <section class="section">
             <h2 class="section-title">Documentation</h2>
             <div class="nav-grid">
+                <a class="nav-card" href="user-guide.html">
+                    <h3>User Guide</h3>
+                    <p>Complete step-by-step walkthrough with screenshots and videos.</p>
+                </a>
                 <a class="nav-card" href="email.html">
                     <h3>Email Campaigns</h3>
                     <p>Field mapping, transformations, and examples.</p>
@@ -155,5 +215,33 @@
             </div>
         </section>
     </main>
+
+    <script>
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('theme-toggle');
+        const themeIcon = document.querySelector('.theme-toggle-icon');
+        const html = document.documentElement;
+
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+        
+        updateThemeIcon(currentTheme);
+
+        // Theme toggle event listener
+        themeToggle.addEventListener('click', function() {
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+    </script>
 </body>
 </html>

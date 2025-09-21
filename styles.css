@@ -2,6 +2,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 :root {
+    /* Light Theme */
+    --primary-color: #00AFB9;
+    --secondary-color: #ff3366;
+    --accent-color: #00ff88;
+    --bg-dark: #F9FAFB;
+    --bg-darker: #FFFFFF;
+    --bg-card: #FFFFFF;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --text-accent: #00AFB9;
+    --border-color: #E5E7EB;
+    --glow-color: rgba(0, 175, 185, 0.3);
+    --gradient-primary: linear-gradient(135deg, #00AFB9 0%, #ff3366 100%);
+    --gradient-secondary: linear-gradient(135deg, #ff3366 0%, #00ff88 100%);
+}
+
+[data-theme="dark"] {
+    /* Dark Theme */
     --primary-color: #00d4ff;
     --secondary-color: #ff3366;
     --accent-color: #00ff88;
