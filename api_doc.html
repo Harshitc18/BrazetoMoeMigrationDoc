@@ -211,7 +211,7 @@
 
             <h3>How to Use in Postman (for POST requests)</h3>
             <ol>
-                <li><strong>Set the Method & URL:</strong> Select <code>POST</code> as the method and enter the full request URL (e.g., <code>http://localhost:8080/v1/migrate-campaign</code>).</li>
+                <li><strong>Set the Method & URL:</strong> Select <code>POST</code> as the method and enter the full request URL (e.g., <code>https://sdk-brazemigration.moestaging.com/api/email/v1/migrate-campaign</code>).</li>
                 <li><strong>Set Headers:</strong> Go to the "Headers" tab and add a key <code>Content-Type</code> with the value <code>application/json</code>.</li>
                 <li><strong>Set Body:</strong> Go to the "Body" tab, select the <code>raw</code> option, and choose <code>JSON</code> from the dropdown. Paste the required JSON payload into the text area.</li>
                 <li><strong>Send:</strong> Click the "Send" button to execute the request.</li>
@@ -221,7 +221,7 @@
         <section id="braze-fetcher-api">
             <h2>Braze Campaign Fetcher API</h2>
             <p>A service to fetch, filter, and export campaign data directly from the Braze platform.</p>
-            <p><strong>Base URL:</strong> <code>http://localhost:8082</code></p>
+            <p><strong>Base URL:</strong> <code>https://sdk-brazemigration.moestaging.com/api/campaign-fetcher</code></p>
             <div class="note"><strong>Authentication:</strong> All endpoints for this service require Braze credentials to be passed as custom HTTP Headers.</div>
 
             <div class="endpoint">
@@ -266,7 +266,7 @@
         <section id="email-api">
             <h2>Email Migration API</h2>
             <p>Migrates an email campaign from a Braze JSON export to a MoEngage draft.</p>
-            <p><strong>Base URL:</strong> <code>http://localhost:8080</code></p>
+            <p><strong>Base URL:</strong> <code>https://sdk-brazemigration.moestaging.com/api/email</code></p>
 
             <div class="endpoint">
                 <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-campaign</div>
@@ -313,7 +313,7 @@
         <section id="sms-api">
             <h2>SMS Migration API</h2>
             <p>Migrates an SMS campaign from a Braze JSON export to a MoEngage draft.</p>
-            <p><strong>Base URL:</strong> <code>http://localhost:8083</code></p>
+            <p><strong>Base URL:</strong> <code>https://sdk-brazemigration.moestaging.com/api/sms</code></p>
             <div class="endpoint">
                 <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-sms-campaign</div>
                 <div class="endpoint-body">
@@ -349,7 +349,7 @@
         <section id="push-api">
             <h2>Push Migration API</h2>
             <p>Migrates a Push Notification campaign from a Braze JSON export to a MoEngage draft.</p>
-            <p><strong>Base URL:</strong> <code>http://localhost:8081</code></p>
+            <p><strong>Base URL:</strong> <code>https://sdk-brazemigration.moestaging.com/api/push</code></p>
             <div class="endpoint">
                 <div class="endpoint-header"><span class="method post">POST</span> /v1/migrate-push-campaign</div>
                 <div class="endpoint-body">
@@ -397,7 +397,7 @@
         <section id="content-block-api">
             <h2>Content Block Migration API</h2>
             <p>Fetches and migrates individual or multiple Content Blocks from Braze to MoEngage.</p>
-            <p><strong>Base URL:</strong> <code>http://localhost:8084</code></p>
+            <p><strong>Base URL:</strong> <code>https://sdk-brazemigration.moestaging.com/api/content-block</code></p>
             <div class="endpoint">
                 <div class="endpoint-header"><span class="method post">POST</span> /migrate-content-block</div>
                 <div class="endpoint-body">
